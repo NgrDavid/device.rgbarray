@@ -177,7 +177,7 @@ ISR(PORTC_INT1_vect, ISR_NAKED)
    reti();
 }
 
-#define FINISH_DEMO // do {if (!read_DEMO_MODE) {update_32rgbs(&grb_off[0][0]); return;} } while(0)
+#define FINISH_DEMO do {if (!read_DEMO_MODE) {update_32rgbs(&grb_off[0][0]); return;} } while(0)
    
 void demo_mode (void)
 {
