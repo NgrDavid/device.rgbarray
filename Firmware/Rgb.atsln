@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Atmel Studio Solution File, Format Version 11.00
+Project("{E66E83B9-2572-4076-B26E-6BE79FF3018A}") = "Rgb", "Rgb\Rgb.cppproj", "{2AC71C99-E332-42AC-AA16-8B5FCC4C013B}"
+EndProject
+Project("{E66E83B9-2572-4076-B26E-6BE79FF3018A}") = "RgbDriver", "RgbDriver\RgbDriver.cppproj", "{8966C9AB-4761-42BA-BCA9-1C8D6B99803C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|AVR = Debug|AVR
+		Release|AVR = Release|AVR
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2AC71C99-E332-42AC-AA16-8B5FCC4C013B}.Debug|AVR.ActiveCfg = Debug|AVR
+		{2AC71C99-E332-42AC-AA16-8B5FCC4C013B}.Debug|AVR.Build.0 = Debug|AVR
+		{2AC71C99-E332-42AC-AA16-8B5FCC4C013B}.Release|AVR.ActiveCfg = Release|AVR
+		{2AC71C99-E332-42AC-AA16-8B5FCC4C013B}.Release|AVR.Build.0 = Release|AVR
+		{8966C9AB-4761-42BA-BCA9-1C8D6B99803C}.Debug|AVR.ActiveCfg = Debug|AVR
+		{8966C9AB-4761-42BA-BCA9-1C8D6B99803C}.Debug|AVR.Build.0 = Debug|AVR
+		{8966C9AB-4761-42BA-BCA9-1C8D6B99803C}.Release|AVR.ActiveCfg = Release|AVR
+		{8966C9AB-4761-42BA-BCA9-1C8D6B99803C}.Release|AVR.Build.0 = Release|AVR
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
