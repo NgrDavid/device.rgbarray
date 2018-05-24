@@ -146,7 +146,7 @@ typedef struct
 /************************************************************************/
 /* Registers */
 #define ADD_REG_LEDS_STATUS                 32 // U8     Status of the LEDs and control.
-#define ADD_REG_LEDS_ON_BUS                 33 // U8     Number of RGB LEDs used (half on each bus) (Max. is 64)
+#define ADD_REG_LEDS_ON_BUS                 33 // U8     Number of RGB LEDs used on each bus (Max. is 32)
 #define ADD_REG_COLOR_ARRAY                 34 // U8     RGBs' values on the format R G B
 #define ADD_REG_COLOR_ARRAY_BUS0            35 // U8     RGBs' values for the bus 0 on the format R G B
 #define ADD_REG_COLOR_ARRAY_BUS1            36 // U8     RGBs' values for the bus 1 on the format R G B

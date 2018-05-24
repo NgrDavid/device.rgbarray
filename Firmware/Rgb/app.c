@@ -70,7 +70,7 @@ void update_bus (void)
    clr_DEMO_MODE0;   // Stop demonstration mode if active
    clr_DEMO_MODE1;
       
-   cmd_array[3] = app_regs.REG_LEDS_ON_BUS >> 1;   // Divide by 2
+   cmd_array[3] = app_regs.REG_LEDS_ON_BUS;
    
    uart0_xmit(cmd_array, 4);
    uart0_xmit(app_regs.REG_COLOR_ARRAY, cmd_array[3] * 3);
@@ -81,7 +81,7 @@ void update_bus (void)
 
 void start_demo_mode (void)
 {
-   uint8_t leds_on_bus = app_regs.REG_LEDS_ON_BUS >> 1;   // Divide by 2
+   uint8_t leds_on_bus = app_regs.REG_LEDS_ON_BUS;
    
    set_DEMO_MODE0;
    set_DEMO_MODE1;
@@ -120,7 +120,7 @@ void core_callback_reset_registers(void)
 {
 	app_regs.REG_LEDS_STATUS = 0;
    
-   app_regs.REG_LEDS_ON_BUS = 64;
+   app_regs.REG_LEDS_ON_BUS = 32;
    
    for (uint8_t i = 0; i < 192; i++)
       app_regs.REG_COLOR_ARRAY[i] = 0;
@@ -130,7 +130,8 @@ void core_callback_reset_registers(void)
    app_regs.REG_RESERVED2 = 0;
    app_regs.REG_RESERVED3 = 0;
    app_regs.REG_RESERVED4 = 0;
-   app_regs.REG_RESERVED5 = 0;      
+   app_regs.REG_RESERVED5 = 0;
+      
    
    app_regs.REG_EVNT_ENABLE = B_EVT_LED_STATUS | B_EVT_INPUTS_STATE;
 }
