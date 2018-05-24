@@ -2,15 +2,11 @@
 #include "app_ios_and_regs.h"
 #include "hwbp_core.h"
 
-#include <string.h>
-
-bool update_rgbs = false;
-bool slave_is_ready = true;
-
-//uint8_t temporary_rgb_arrays_bus0[96];
-//uint8_t temporary_rgb_arrays_bus1[96];
+#include <string.h>  // For the memcpy()
 
 void update_bus (void);
+void start_demo_mode (void);
+void stop_demo_mode (void);
 
 /************************************************************************/
 /* Create pointers to functions                                         */
@@ -69,13 +65,43 @@ bool (*app_func_wr_pointer[])(void*) = {
 /************************************************************************/
 void app_read_REG_LEDS_STATUS(void)
 {
-	//app_regs.REG_LEDS_STATUS = 0;
-
+	app_regs.REG_LEDS_STATUS = 0;
 }
 
 bool app_write_REG_LEDS_STATUS(void *a)
 {
 	uint8_t reg = *((uint8_t*)a);
+   
+   if ((reg != B_RGB_ON) && (reg != B_RGB_OFF) && (reg != B_DEMO_MODE_ON) && (reg != B_DEMO_MODE_OFF))
+      return false;
+   
+   if (reg & B_RGB_ON)
+   {
+      stop_demo_mode();
+      set_UPDATE_LEDS0;
+      set_UPDATE_LEDS1;
+      clr_UPDATE_LEDS0;
+      clr_UPDATE_LEDS1;
+   }
+      
+   if (reg & B_RGB_OFF)
+   {
+      stop_demo_mode();
+      set_DISABLE_LEDS0;
+      set_DISABLE_LEDS1;
+      clr_DISABLE_LEDS0;
+      clr_DISABLE_LEDS1;
+   }
+   
+   if (reg & B_DEMO_MODE_ON)
+   {
+      start_demo_mode();
+   }
+   
+   if (reg & B_DEMO_MODE_OFF)
+   {
+      stop_demo_mode();
+   }
 
 	app_regs.REG_LEDS_STATUS = reg;
 	return true;
@@ -85,15 +111,13 @@ bool app_write_REG_LEDS_STATUS(void *a)
 /************************************************************************/
 /* REG_LEDS_ON_BUS                                                      */
 /************************************************************************/
-void app_read_REG_LEDS_ON_BUS(void)
-{
-	//app_regs.REG_LEDS_ON_BUS = 0;
-
-}
-
+void app_read_REG_LEDS_ON_BUS(void) {}
 bool app_write_REG_LEDS_ON_BUS(void *a)
 {
 	uint8_t reg = *((uint8_t*)a);
+   
+   if (reg > 64)
+      return false;
 
 	app_regs.REG_LEDS_ON_BUS = reg;
 	return true;
@@ -111,17 +135,7 @@ bool app_write_REG_COLOR_ARRAY(void *a)
 	uint8_t *reg = ((uint8_t*)a);
    
    memcpy(app_regs.REG_COLOR_ARRAY, reg, 192);
-   //memcpy(app_regs.REG_COLOR_ARRAY_BUS0, reg, 96);
-   //memcpy(app_regs.REG_COLOR_ARRAY_BUS1, reg+96, 96);
-   
-   //memcpy(temporary_rgb_arrays_bus0, app_regs.REG_COLOR_ARRAY_BUS0, 96);
-   //memcpy(temporary_rgb_arrays_bus1, app_regs.REG_COLOR_ARRAY_BUS1, 96);
-   
-   //temporary_rgb_arrays
-   //the_checksum = reg[192];
    update_bus();
-   
-   update_rgbs = true;
    
 	return true;
 }
@@ -131,17 +145,16 @@ bool app_write_REG_COLOR_ARRAY(void *a)
 /* REG_COLOR_ARRAY_BUS0                                                 */
 /************************************************************************/
 // This register is an array with 96 positions
-void app_read_REG_COLOR_ARRAY_BUS0(void) {}
+void app_read_REG_COLOR_ARRAY_BUS0(void)
+{
+   memcpy(app_regs.REG_COLOR_ARRAY_BUS0, app_regs.REG_COLOR_ARRAY, 96);
+}
 bool app_write_REG_COLOR_ARRAY_BUS0(void *a)
 {
 	uint8_t *reg = ((uint8_t*)a);
 
    memcpy(app_regs.REG_COLOR_ARRAY, reg, 96);
-   memcpy(app_regs.REG_COLOR_ARRAY_BUS0, reg, 96);
-   
-   //memcpy(temporary_rgb_arrays_bus0, app_regs.REG_COLOR_ARRAY_BUS0, 96);
-   
-   update_rgbs = true;
+   update_bus();
    
 	return true;
 }
@@ -151,17 +164,16 @@ bool app_write_REG_COLOR_ARRAY_BUS0(void *a)
 /* REG_COLOR_ARRAY_BUS1                                                 */
 /************************************************************************/
 // This register is an array with 96 positions
-void app_read_REG_COLOR_ARRAY_BUS1(void) {}
+void app_read_REG_COLOR_ARRAY_BUS1(void)
+{
+   memcpy(app_regs.REG_COLOR_ARRAY_BUS1, app_regs.REG_COLOR_ARRAY+96, 96);
+}
 bool app_write_REG_COLOR_ARRAY_BUS1(void *a)
 {
 	uint8_t *reg = ((uint8_t*)a);
 
 	memcpy(app_regs.REG_COLOR_ARRAY+96, reg, 96);
-	memcpy(app_regs.REG_COLOR_ARRAY_BUS1, reg, 96);   
-   
-   //memcpy(temporary_rgb_arrays_bus1, app_regs.REG_COLOR_ARRAY_BUS1, 96);
-	
-	update_rgbs = true;
+	update_bus();
    
 	return true;
 }
@@ -170,17 +182,10 @@ bool app_write_REG_COLOR_ARRAY_BUS1(void *a)
 /************************************************************************/
 /* REG_RESERVED0                                                        */
 /************************************************************************/
-void app_read_REG_RESERVED0(void)
-{
-	//app_regs.REG_RESERVED0 = 0;
-
-}
-
+void app_read_REG_RESERVED0(void) {}
 bool app_write_REG_RESERVED0(void *a)
 {
-	uint8_t reg = *((uint8_t*)a);
-
-	app_regs.REG_RESERVED0 = reg;
+	app_regs.REG_RESERVED0 = *((uint8_t*)a);
 	return true;
 }
 
@@ -188,17 +193,10 @@ bool app_write_REG_RESERVED0(void *a)
 /************************************************************************/
 /* REG_RESERVED1                                                        */
 /************************************************************************/
-void app_read_REG_RESERVED1(void)
-{
-	//app_regs.REG_RESERVED1 = 0;
-
-}
-
+void app_read_REG_RESERVED1(void) {}
 bool app_write_REG_RESERVED1(void *a)
 {
-	uint8_t reg = *((uint8_t*)a);
-
-	app_regs.REG_RESERVED1 = reg;
+	app_regs.REG_RESERVED1 = *((uint8_t*)a);
 	return true;
 }
 
@@ -260,17 +258,10 @@ bool app_write_REG_DO1_CONF(void *a)
 /************************************************************************/
 /* REG_RESERVED2                                                        */
 /************************************************************************/
-void app_read_REG_RESERVED2(void)
-{
-	//app_regs.REG_RESERVED2 = 0;
-
-}
-
+void app_read_REG_RESERVED2(void) {}
 bool app_write_REG_RESERVED2(void *a)
 {
-	uint8_t reg = *((uint8_t*)a);
-
-	app_regs.REG_RESERVED2 = reg;
+	app_regs.REG_RESERVED2 = *((uint8_t*)a);
 	return true;
 }
 
@@ -278,17 +269,10 @@ bool app_write_REG_RESERVED2(void *a)
 /************************************************************************/
 /* REG_RESERVED3                                                        */
 /************************************************************************/
-void app_read_REG_RESERVED3(void)
-{
-	//app_regs.REG_RESERVED3 = 0;
-
-}
-
+void app_read_REG_RESERVED3(void) {}
 bool app_write_REG_RESERVED3(void *a)
 {
-	uint8_t reg = *((uint8_t*)a);
-
-	app_regs.REG_RESERVED3 = reg;
+	app_regs.REG_RESERVED3 = *((uint8_t*)a);
 	return true;
 }
 
@@ -296,19 +280,8 @@ bool app_write_REG_RESERVED3(void *a)
 /************************************************************************/
 /* REG_INPUTS_STATE                                                     */
 /************************************************************************/
-void app_read_REG_INPUTS_STATE(void)
-{
-	//app_regs.REG_INPUTS_STATE = 0;
-
-}
-
-bool app_write_REG_INPUTS_STATE(void *a)
-{
-	uint8_t reg = *((uint8_t*)a);
-
-	app_regs.REG_INPUTS_STATE = reg;
-	return true;
-}
+void app_read_REG_INPUTS_STATE(void) { app_regs.REG_INPUTS_STATE = read_DI0 ? B_DI0 : 0; }
+bool app_write_REG_INPUTS_STATE(void *a) { return false; }
 
 
 /************************************************************************/
@@ -386,17 +359,10 @@ bool app_write_REG_OUTPUTS_OUT(void *a)
 /************************************************************************/
 /* REG_RESERVED4                                                        */
 /************************************************************************/
-void app_read_REG_RESERVED4(void)
-{
-	//app_regs.REG_RESERVED4 = 0;
-
-}
-
+void app_read_REG_RESERVED4(void) {}
 bool app_write_REG_RESERVED4(void *a)
 {
-	uint8_t reg = *((uint8_t*)a);
-
-	app_regs.REG_RESERVED4 = reg;
+	app_regs.REG_RESERVED4 = *((uint8_t*)a);
 	return true;
 }
 
@@ -404,17 +370,10 @@ bool app_write_REG_RESERVED4(void *a)
 /************************************************************************/
 /* REG_RESERVED5                                                        */
 /************************************************************************/
-void app_read_REG_RESERVED5(void)
-{
-	//app_regs.REG_RESERVED5 = 0;
-
-}
-
+void app_read_REG_RESERVED5(void) {}
 bool app_write_REG_RESERVED5(void *a)
 {
-	uint8_t reg = *((uint8_t*)a);
-
-	app_regs.REG_RESERVED5 = reg;
+	app_regs.REG_RESERVED5 = *((uint8_t*)a);
 	return true;
 }
 
@@ -422,15 +381,13 @@ bool app_write_REG_RESERVED5(void *a)
 /************************************************************************/
 /* REG_EVNT_ENABLE                                                      */
 /************************************************************************/
-void app_read_REG_EVNT_ENABLE(void)
-{
-	//app_regs.REG_EVNT_ENABLE = 0;
-
-}
-
+void app_read_REG_EVNT_ENABLE(void) {}
 bool app_write_REG_EVNT_ENABLE(void *a)
 {
 	uint8_t reg = *((uint8_t*)a);
+   
+   if (reg & ~(B_EVT_INPUTS_STATE | B_EVT_LED_STATUS))
+      return false;
 
 	app_regs.REG_EVNT_ENABLE = reg;
 	return true;

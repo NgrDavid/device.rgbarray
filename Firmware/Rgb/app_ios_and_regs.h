@@ -7,16 +7,16 @@ void init_ios(void);
 /* Definition of input pins                                             */
 /************************************************************************/
 // DI0                    Description: Input DIO
-// LEDS_READY0            Description: High when have array loaded until update the RGBs
-// LEDS_READY1            Description: High when have array loaded until update the RGBs
-// DISABLING_LEDS0        Description: High while turning off the RGBs
-// DISABLING_LEDS1        Description: High while turning off the RGBs
+// DUMMY0_0               Description: Not used
+// DUMMY1_0               Description: Not used
+// DUMMY0_1               Description: Not used
+// DUMMY1_1               Description: Not used
 
 #define read_DI0 read_io(PORTA, 0)              // DI0
-#define read_LEDS_READY0 read_io(PORTB, 1)      // LEDS_READY0
-#define read_LEDS_READY1 read_io(PORTC, 6)      // LEDS_READY1
-#define read_DISABLING_LEDS0 read_io(PORTB, 2)  // DISABLING_LEDS0
-#define read_DISABLING_LEDS1 read_io(PORTC, 7)  // DISABLING_LEDS1
+#define read_DUMMY0_0 read_io(PORTB, 1)         // DUMMY0_0
+#define read_DUMMY1_0 read_io(PORTB, 2)         // DUMMY1_0
+#define read_DUMMY0_1 read_io(PORTC, 6)         // DUMMY0_1
+#define read_DUMMY1_1 read_io(PORTC, 7)         // DUMMY1_1
 
 /************************************************************************/
 /* Definition of output pins                                            */
@@ -30,6 +30,8 @@ void init_ios(void);
 // DISABLE_LEDS0          Description: Turn OFF the RGBs on Bus 0
 // UPDATE_LEDS1           Description: Update the RGBs on Bus 1
 // DISABLE_LEDS1          Description: Turn OFF the RGBs on Bus 1
+// DEMO_MODE0             Description: Enable demonstration mode on Bus 0
+// DEMO_MODE1             Description: Enable demonstration mode on Bus 1
 // DEMO_MODE0             Description: Enable demonstration mode on Bus 0
 // DEMO_MODE1             Description: Enable demonstration mode on Bus 1
 
@@ -99,6 +101,18 @@ void init_ios(void);
 #define tgl_DEMO_MODE1 toggle_io(PORTC, 5)
 #define read_DEMO_MODE1 read_io(PORTC, 5)
 
+/* DEMO_MODE0 */
+#define set_DEMO_MODE0 set_io(PORTB, 0)
+#define clr_DEMO_MODE0 clear_io(PORTB, 0)
+#define tgl_DEMO_MODE0 toggle_io(PORTB, 0)
+#define read_DEMO_MODE0 read_io(PORTB, 0)
+
+/* DEMO_MODE1 */
+#define set_DEMO_MODE1 set_io(PORTC, 5)
+#define clr_DEMO_MODE1 clear_io(PORTC, 5)
+#define tgl_DEMO_MODE1 toggle_io(PORTC, 5)
+#define read_DEMO_MODE1 read_io(PORTC, 5)
+
 
 /************************************************************************/
 /* Registers' structure                                                 */
@@ -131,7 +145,7 @@ typedef struct
 /* Registers' address                                                   */
 /************************************************************************/
 /* Registers */
-#define ADD_REG_LEDS_STATUS                 32 // U8     Writing any value above ZERO will start the acquisition. ZERO will stop it.
+#define ADD_REG_LEDS_STATUS                 32 // U8     Status of the LEDs and control.
 #define ADD_REG_LEDS_ON_BUS                 33 // U8     Number of RGB LEDs used (half on each bus) (Max. is 64)
 #define ADD_REG_COLOR_ARRAY                 34 // U8     RGBs' values on the format R G B
 #define ADD_REG_COLOR_ARRAY_BUS0            35 // U8     RGBs' values for the bus 0 on the format R G B
@@ -166,15 +180,20 @@ typedef struct
 /************************************************************************/
 /* Registers' bits                                                      */
 /************************************************************************/
-#define B_RGBS_UPDATED                     (1<<0)       // RGBs were updated if 1 or disabled if 0
+#define B_RGB_ON                           (1<<0)       // RGB to ON
+#define B_RGB_OFF                          (1<<1)       // RGB to OFF
+#define B_DEMO_MODE_ON                     (1<<2)       // Start demonstration mode
+#define B_DEMO_MODE_OFF                    (1<<3)       // Stop demonstration mode
 #define MSK_DI0_SEL                        (3<<0)       // 
 #define GM_DI0_SYNC                        (0<<0)       // Use as a pure digital input
 #define GM_DI0_RISE_UPDATE_RGBS            (1<<0)       // Update RGBs with a rising edge
-#define GM_DI0_HIGH_RGBS_ON                (2<<0)       // Turn RGBs ON when pin is at logic high
-#define MSK_DO_SEL                         (3<<0)       // 
+#define GM_DI0_HIGH_RGBS_ON                (2<<0)       // Able to update RGBs when the pin is HIGH. Turn LEDs off when rising edge is detected.
+#define MSK_DO_SEL                         (7<<0)       // 
 #define GM_DO_DIG                          (0<<0)       // Use as a pure digital output
 #define GM_DO_PULSE_WHEN_UPDATED           (1<<0)       // Pulse 1 ms when the RGBs are updated
-#define GM_DO_PULSE _WHEN_ARRAY_LOADED     (2<<0)       // Pulse 1 ms when a new color array is loaded
+#define GM_DO_PULSE_WHEN_ARRAY_LOADED      (2<<0)       // Pulse 1 ms when a new color array is loaded
+#define GM_DO_TOGGLE_WHEN_UPDATED          (3<<0)       // Toggles when the RGBs are updated
+#define GM_DO_TOGGLE_WHEN_ARRAY_LOADED     (4<<0)       // Toggles when a new color array is loaded
 #define B_DI0                              (1<<0)       // 
 #define B_DO0                              (1<<0)       // 
 #define B_DO1                              (1<<1)       // 

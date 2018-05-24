@@ -7,21 +7,15 @@
 #include <util/delay.h>
 
 /************************************************************************/
+/* Defines                                                              */
+/************************************************************************/
+#define EVENT_LOAD_DONE 0xA1
+#define EVENT_LEDS_UPDATED 0xA2
+#define EVENT_LEDS_OFF 0xA3
+
+/************************************************************************/
 /* Definition of pins handling                                          */
 /************************************************************************/
-/* LEDS_READY */
-#define set_LEDS_READY set_io(PORTE, 0)
-#define clr_LEDS_READY clear_io(PORTE, 0)
-#define tgl_LEDS_READY toggle_io(PORTE, 0)
-
-/* DISABLING_LEDS */
-#define set_DISABLING_LEDS set_io(PORTE, 1)
-#define clr_DISABLING_LEDS clear_io(PORTE, 1)
-#define tgl_DISABLING_LEDS toggle_io(PORTE, 1)
-
-/* Reading pins */
-#define read_UPDATE_LEDS read_io(PORTC, 2)
-#define read_DISABLE_LEDS read_io(PORTC, 3)
 #define read_DEMO_MODE read_io(PORTC, 4)
     
 /************************************************************************/
@@ -69,16 +63,13 @@ int main(void)
    io_set_int(&PORTC, INT_LEVEL_LOW, 0, (1<<2), false);        // UPDATE_LEDS
    io_pin2in(&PORTC, 3, PULL_IO_DOWN, SENSE_IO_EDGE_RISING);   // DISABLE_LEDS
    io_set_int(&PORTC, INT_LEVEL_LOW, 1, (1<<3), false);        // DISABLE_LEDS
-   io_pin2in(&PORTC, 4, PULL_IO_DOWN, SENSE_IO_EDGE_RISING);   // DEMO_MODE
-   io_pin2out(&PORTE, 0, OUT_IO_DIGITAL, IN_EN_IO_EN);         // LEDS_READY
-   io_pin2out(&PORTE, 1, OUT_IO_DIGITAL, IN_EN_IO_EN);         // DISABLING_LEDS
-   clr_LEDS_READY;
-   clr_DISABLING_LEDS;
+   io_pin2in(&PORTC, 4, PULL_IO_DOWN, SENSE_IO_EDGES_BOTH);    // DEMO_MODE   
+   io_pin2in(&PORTE, 0, PULL_IO_DOWN, SENSE_IO_EDGES_BOTH);    // DUMMY0
+   io_pin2in(&PORTE, 1, PULL_IO_DOWN, SENSE_IO_EDGES_BOTH);    // DUMMY1
    
    /* Initialize UART */
    disable_uart0_rx;
    uart0_init(0, 1, false);   // 1 Mb/s
-   //uart0_init(1, 1, false); // 500 Kb/s
    uart0_enable();
    uart0_rx_pointer = 0;
          
@@ -119,9 +110,7 @@ void uart0_rcv_byte_callback(uint8_t byte)
    {
       case 0:
             if (byte == 'r')
-            {
-               clr_LEDS_READY;
-               
+            {               
                uart0_rx_pointer = 0;
                
                rx_state++;
@@ -183,11 +172,13 @@ void uart0_rcv_byte_callback(uint8_t byte)
                STOP_TIMEOUT;
                rx_state = 0;
                
-               set_LEDS_READY;
+               uart0_xmit_now_byte(EVENT_LOAD_DONE);
                   
-               for (uint16_t i = 0; i < num_of_leds_on_bus * 3; i++)
+               for (uint16_t i = 0; i < num_of_leds_on_bus; i++)
                {
-                  *((&grb_on[0][0]) + i) = rxbuff_uart0[i];
+                  *((&grb_on[0][0]) + i*3 + 0) = rxbuff_uart0[i*3 + 1];
+                  *((&grb_on[0][0]) + i*3 + 1) = rxbuff_uart0[i*3 + 0];
+                  *((&grb_on[0][0]) + i*3 + 2) = rxbuff_uart0[i*3 + 2];
                }
             }
    }
@@ -215,9 +206,8 @@ ISR(PORTC_INT0_vect, ISR_NAKED)
    {
       disable_uart0_rx;
       update_ws2812_bus(&grb_on[0][0], num_of_leds_on_bus); //update_32rgbs(&grb_on[0][0]);
+      uart0_xmit_now_byte(EVENT_LEDS_UPDATED);
       enable_uart0_rx;
-         
-      clr_LEDS_READY;
    }
    
    reti();
@@ -226,16 +216,12 @@ ISR(PORTC_INT0_vect, ISR_NAKED)
 /************************************************************************/
 /* DISABLE_LEDS                                                         */
 /************************************************************************/
-
 ISR(PORTC_INT1_vect, ISR_NAKED)
-{
-   set_DISABLING_LEDS;
-   
+{   
    disable_uart0_rx;
    update_ws2812_bus(&grb_off[0][0], num_of_leds_on_bus); //update_32rgbs(&grb_off[0][0]);
+   uart0_xmit_now_byte(EVENT_LEDS_OFF);
    enable_uart0_rx;
-   
-   clr_DISABLING_LEDS;
          
    reti();
 }

@@ -8,17 +8,13 @@
 void init_ios(void)
 {	/* Configure input pins */
 	io_pin2in(&PORTA, 0, PULL_IO_UP, SENSE_IO_EDGES_BOTH);               // DI0
-	io_pin2in(&PORTB, 1, PULL_IO_UP, SENSE_IO_EDGES_BOTH);               // LEDS_READY0
-	io_pin2in(&PORTC, 6, PULL_IO_UP, SENSE_IO_EDGES_BOTH);               // LEDS_READY1
-	io_pin2in(&PORTB, 2, PULL_IO_UP, SENSE_IO_EDGE_FALLING);             // DISABLING_LEDS0
-	io_pin2in(&PORTC, 7, PULL_IO_UP, SENSE_IO_EDGE_FALLING);             // DISABLING_LEDS1
+	io_pin2in(&PORTB, 1, PULL_IO_DOWN, SENSE_IO_EDGES_BOTH);             // DUMMY0_0
+	io_pin2in(&PORTB, 2, PULL_IO_DOWN, SENSE_IO_EDGES_BOTH);             // DUMMY1_0
+	io_pin2in(&PORTC, 6, PULL_IO_DOWN, SENSE_IO_EDGES_BOTH);             // DUMMY0_1
+	io_pin2in(&PORTC, 7, PULL_IO_DOWN, SENSE_IO_EDGES_BOTH);             // DUMMY1_1
 
 	/* Configure input interrupts */
 	io_set_int(&PORTA, INT_LEVEL_LOW, 0, (1<<0), false);                 // DI0
-	io_set_int(&PORTB, INT_LEVEL_LOW, 0, (1<<1), false);                 // LEDS_READY0
-	io_set_int(&PORTC, INT_LEVEL_LOW, 0, (1<<6), false);                 // LEDS_READY1
-	io_set_int(&PORTB, INT_LEVEL_LOW, 1, (1<<2), false);                 // DISABLING_LEDS0
-	io_set_int(&PORTC, INT_LEVEL_LOW, 1, (1<<7), false);                 // DISABLING_LEDS1
 
 	/* Configure output pins */
 	io_pin2out(&PORTA, 1, OUT_IO_DIGITAL, IN_EN_IO_EN);                  // DO0
@@ -32,6 +28,8 @@ void init_ios(void)
 	io_pin2out(&PORTC, 4, OUT_IO_DIGITAL, IN_EN_IO_EN);                  // DISABLE_LEDS1
 	io_pin2out(&PORTB, 0, OUT_IO_DIGITAL, IN_EN_IO_EN);                  // DEMO_MODE0
 	io_pin2out(&PORTC, 5, OUT_IO_DIGITAL, IN_EN_IO_EN);                  // DEMO_MODE1
+	io_pin2out(&PORTB, 0, OUT_IO_DIGITAL, IN_EN_IO_EN);                  // DEMO_MODE0
+	io_pin2out(&PORTC, 5, OUT_IO_DIGITAL, IN_EN_IO_EN);                  // DEMO_MODE1
 
 	/* Initialize output pins */
 	clr_DO0;
@@ -43,6 +41,8 @@ void init_ios(void)
 	clr_DISABLE_LEDS0;
 	clr_UPDATE_LEDS1;
 	clr_DISABLE_LEDS1;
+	clr_DEMO_MODE0;
+	clr_DEMO_MODE1;
 	clr_DEMO_MODE0;
 	clr_DEMO_MODE1;
 }
