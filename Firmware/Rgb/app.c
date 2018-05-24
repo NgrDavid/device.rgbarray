@@ -62,50 +62,38 @@ void core_callback_catastrophic_error_detected(void)
 /************************************************************************/
 /* General used functions                                               */
 /************************************************************************/
-uint8_t cmd_array[4] = {'r', 'g', 'b', 0};
-uint8_t cmd_demo[4]  = {'r', 'g', 'c', 0};
+uint8_t cmd_array[4] = {'r', 'g', 'b', 0};   // Command and REG_LEDS_ON_BUS/2
+uint8_t cmd_demo[4]  = {'r', 'g', 'c', 0};   // Command and REG_LEDS_ON_BUS/2
    
 void uart0_rcv_byte_callback(uint8_t byte) {}
 void uart1_rcv_byte_callback(uint8_t byte) {}
    
 void update_bus (void)
 {
-   uint8_t leds_on_bus = app_regs.REG_LEDS_ON_BUS / 2;
-   uint8_t checksum_bus0 = cmd_array[0] + cmd_array[1] + cmd_array[2] + leds_on_bus;
-   uint8_t checksum_bus1 = cmd_array[0] + cmd_array[1] + cmd_array[2] + leds_on_bus;
-   cmd_array[3] = leds_on_bus;
+   clr_DEMO_MODE0;   // Stop demonstration mode if active
+   clr_DEMO_MODE1;
+      
+   cmd_array[3] = app_regs.REG_LEDS_ON_BUS >> 1;   // Divide by 2
    
    uart0_xmit(cmd_array, 4);
-   uart0_xmit(app_regs.REG_COLOR_ARRAY_BUS0, leds_on_bus * 3);
+   uart0_xmit(app_regs.REG_COLOR_ARRAY, cmd_array[3] * 3);
    
    uart1_xmit(cmd_array, 4);
-   uart1_xmit(app_regs.REG_COLOR_ARRAY_BUS1, leds_on_bus * 3);   
-   
-   for (uint8_t i = 0; i < (app_regs.REG_LEDS_ON_BUS / 2) * 3; i++)
-   {
-      checksum_bus0 += app_regs.REG_COLOR_ARRAY_BUS0[i];
-      checksum_bus1 += app_regs.REG_COLOR_ARRAY_BUS1[i];
-   }
-
-   uart0_xmit(&checksum_bus0, 1);
-   uart1_xmit(&checksum_bus1, 1);
+   uart1_xmit(app_regs.REG_COLOR_ARRAY + 96, cmd_array[3] * 3);
 }
 
 void start_demo_mode (void)
 {
-   uint8_t leds_on_bus = app_regs.REG_LEDS_ON_BUS / 2;
-   uint8_t checksum = cmd_demo[0] + cmd_demo[1] + cmd_demo[2] + leds_on_bus;
+   uint8_t leds_on_bus = app_regs.REG_LEDS_ON_BUS >> 1;   // Divide by 2
    
    set_DEMO_MODE0;
    set_DEMO_MODE1;
    
    uart0_xmit(cmd_demo, 3);
-   uart0_xmit(&leds_on_bus, 1);   
-   uart0_xmit(&checksum, 1);
+   uart0_xmit(&leds_on_bus, 1);
    
    uart1_xmit(cmd_demo, 3);
    uart1_xmit(&leds_on_bus, 1);
-   uart1_xmit(&checksum, 1);
 }
 
 void stop_demo_mode (void)

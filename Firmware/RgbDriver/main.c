@@ -45,8 +45,6 @@ uint8_t grb_off[MAX_LEDS][3];
 uint8_t rx_state = 0;
 uint8_t _3rd_byte;
 
-uint8_t checksum;
-
 uint8_t num_of_leds_on_bus = MAX_LEDS;
 
 /************************************************************************/
@@ -111,7 +109,7 @@ int main(void)
 #define STOP_TIMEOUT timer_type0_stop(&TCC0)
 
 // Protocol:
-// RGB array: 'r' 'g' 'b' num_of_leds_on_bus array[num_of_leds_on_bus * 3] checksum
+// RGB array: 'r' 'g' 'b' num_of_leds_on_bus array[num_of_leds_on_bus * 3]
 // RGB demo:  'r' 'g' 'c' num_of_leds_on_bus
 
 void uart0_rcv_byte_callback(uint8_t byte)
@@ -123,8 +121,9 @@ void uart0_rcv_byte_callback(uint8_t byte)
             {
                clr_LEDS_READY;
                
+               uart0_rx_pointer = 0;
+               
                rx_state++;
-               checksum = byte;
                START_TIMEOUT; 
             }
             break;
@@ -132,7 +131,6 @@ void uart0_rcv_byte_callback(uint8_t byte)
             if (byte == 'g')
             {
                rx_state++;
-               checksum += byte;
                START_TIMEOUT;
             }
             else
@@ -146,7 +144,6 @@ void uart0_rcv_byte_callback(uint8_t byte)
             {
                rx_state++;
                _3rd_byte = byte;
-               checksum += byte;
                RESET_TIMEOUT;
             }
             else
@@ -157,51 +154,40 @@ void uart0_rcv_byte_callback(uint8_t byte)
             break;
       
       case 3:
-            num_of_leds_on_bus = byte;
-            rx_state++;
-            checksum += byte;
-            RESET_TIMEOUT;
-            break;
-      
-      case 4:
+            num_of_leds_on_bus = byte;          
+            
             if (_3rd_byte == 'c')
             {
                STOP_TIMEOUT;
                rx_state = 0;
                
-               if (checksum == byte)
-               {
-                  disable_uart0_rx;
-                  demo_mode();
-                  enable_uart0_rx;
-               }
-               
-               return;
-            }
-      
-            rxbuff_uart0[uart0_rx_pointer++] = byte;
-            RESET_TIMEOUT;
-            
-            if (uart0_rx_pointer == num_of_leds_on_bus * 3 + 1)
-            {  
-               STOP_TIMEOUT;
-               
-               uart0_rx_pointer = 0;
-               rx_state = 0;
-               
-               if (checksum == byte)
-               {
-                  set_LEDS_READY;
-                  
-                  for (uint16_t i = 0; i < num_of_leds_on_bus * 3; i++)
-                  {
-                     *((&grb_on[0][0]) + i) = rxbuff_uart0[i];
-                  }
-               }
+               disable_uart0_rx;
+               demo_mode();
+               enable_uart0_rx;
             }
             else
             {  
-               checksum += byte;
+               rx_state++;
+               RESET_TIMEOUT;
+            }
+            
+            break;
+      
+      case 4:
+            rxbuff_uart0[uart0_rx_pointer++] = byte;
+            RESET_TIMEOUT;
+            
+            if (uart0_rx_pointer == num_of_leds_on_bus * 3 /*+ 1*/)
+            {  
+               STOP_TIMEOUT;
+               rx_state = 0;
+               
+               set_LEDS_READY;
+                  
+               for (uint16_t i = 0; i < num_of_leds_on_bus * 3; i++)
+               {
+                  *((&grb_on[0][0]) + i) = rxbuff_uart0[i];
+               }
             }
    }
 }
