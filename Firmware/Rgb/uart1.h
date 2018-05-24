@@ -16,7 +16,7 @@
 
 #define UART1_UART				USARTD1
 #define UART1_PORT				PORTD
-#define UART1_DATA				USARTD0_DATA
+#define UART1_DATA				USARTD1_DATA
 #define UART1_RX_pin			6
 #define UART1_TX_pin			7
 
