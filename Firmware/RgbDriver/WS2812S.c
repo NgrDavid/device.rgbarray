@@ -450,3 +450,46 @@ void update_32rgbs (uint8_t * grb_array)
    "pop    r16                 \n"
    );
 }
+
+/*
+* The function is expecting an array like uint8_t grb_array[available_leds_on_bus][3] where [3] is [G][R][B].
+*/
+void update_ws2812_bus (uint8_t * grb_array, uint16_t available_leds_on_bus)
+{
+   uint8_t * address;
+   /*
+   asm volatile (
+   "rjmp update_rgb_bus        \n"
+   
+   "update_rgb_bus:            \n"
+   "push	r16                   \n"
+   "push	__tmp_reg__           \n"
+   "ldi    r16, 0x20           \n"     // Load 0x20 to R16 -- means output port bit 5
+   );
+   */
+   
+   for (uint8_t i = 0; i < available_leds_on_bus; i++)
+   {
+      /* Send address to Z pointer */
+      address = grb_array + i*3;
+
+      asm volatile (
+      "push	r16                   \n"
+      "push	__tmp_reg__           \n"
+      "ldi    r16, 0x20           \n"     // Load 0x20 to R16 -- means output port bit 5
+   
+      "ld __tmp_reg__, Z        \n\t"
+      :   /* No outputs. */
+      :"z"(address)
+      );
+      
+      XMIT_BYTE;
+      XMIT_BYTE;
+      XMIT_BYTE;
+      
+      asm volatile (
+      "pop    __tmp_reg__         \n"
+      "pop    r16                 \n"
+      );
+   }
+}
