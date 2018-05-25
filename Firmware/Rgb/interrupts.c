@@ -99,6 +99,26 @@ void leds_were_updated (void)
       app_regs.REG_LEDS_STATUS = B_RGB_ON;
       core_func_send_event(ADD_REG_LEDS_STATUS, true);
    }
+   
+   if (app_regs.REG_DO0_CONF == GM_DO_PULSE_WHEN_UPDATED)
+   {
+      timer_type0_enable(&TCC0, TIMER_PRESCALER_DIV256, 125, INT_LEVEL_LOW);
+      set_DO0;
+   }
+   if (app_regs.REG_DO0_CONF == GM_DO_TOGGLE_WHEN_UPDATED)
+   {
+      tgl_DO0;
+   }
+      
+   if (app_regs.REG_DO1_CONF == GM_DO_PULSE_WHEN_UPDATED)
+   {
+      timer_type0_enable(&TCD0, TIMER_PRESCALER_DIV256, 125, INT_LEVEL_LOW);
+      set_DO1;
+   }
+   if (app_regs.REG_DO1_CONF == GM_DO_TOGGLE_WHEN_UPDATED)
+   {
+      tgl_DO1;
+   }
 }
 
 /************************************************************************/
