@@ -51,7 +51,19 @@ void hwbp_app_initialize(void)
 /************************************************************************/
 void core_callback_catastrophic_error_detected(void)
 {
-	
+   clr_DEMO_MODE0;
+   clr_DEMO_MODE1;
+   
+   set_DISABLE_LEDS0;
+   set_DISABLE_LEDS1;
+   clr_DISABLE_LEDS0;
+   clr_DISABLE_LEDS1;
+   
+   clr_DO0;
+   clr_DO1;
+   clr_DO2;
+   clr_DO3;
+   clr_DO4;
 }
 
 /************************************************************************/
