@@ -204,15 +204,33 @@ bool app_write_REG_RESERVED1(void *a)
 /************************************************************************/
 /* REG_DI0_CONF                                                         */
 /************************************************************************/
-void app_read_REG_DI0_CONF(void)
-{
-	//app_regs.REG_DI0_CONF = 0;
-
-}
-
+void app_read_REG_DI0_CONF(void) {}
 bool app_write_REG_DI0_CONF(void *a)
 {
 	uint8_t reg = *((uint8_t*)a);
+   
+   if (reg & ~MSK_DI0_SEL)
+      return false;
+   
+   if (reg == GM_DI0_HIGH_RGBS_ON)
+   {
+      if (!read_DI0)
+      {
+         stop_demo_mode();
+         set_DISABLE_LEDS0;
+         set_DISABLE_LEDS1;
+         clr_DISABLE_LEDS0;
+         clr_DISABLE_LEDS1;
+      }
+      else
+      {
+         stop_demo_mode();
+         set_UPDATE_LEDS0;
+         set_UPDATE_LEDS1;
+         clr_UPDATE_LEDS0;
+         clr_UPDATE_LEDS1;
+      }
+   }
 
 	app_regs.REG_DI0_CONF = reg;
 	return true;
@@ -222,15 +240,16 @@ bool app_write_REG_DI0_CONF(void *a)
 /************************************************************************/
 /* REG_DO0_CONF                                                         */
 /************************************************************************/
-void app_read_REG_DO0_CONF(void)
-{
-	//app_regs.REG_DO0_CONF = 0;
-
-}
-
+void app_read_REG_DO0_CONF(void) {}
 bool app_write_REG_DO0_CONF(void *a)
 {
 	uint8_t reg = *((uint8_t*)a);
+   
+   if (reg & ~MSK_DO_SEL)
+      return false;
+   
+   if ((reg == GM_DO_PULSE_WHEN_UPDATED) || (reg == GM_DO_PULSE_WHEN_ARRAY_LOADED))
+      clr_DO0;
 
 	app_regs.REG_DO0_CONF = reg;
 	return true;
@@ -240,15 +259,16 @@ bool app_write_REG_DO0_CONF(void *a)
 /************************************************************************/
 /* REG_DO1_CONF                                                         */
 /************************************************************************/
-void app_read_REG_DO1_CONF(void)
-{
-	//app_regs.REG_DO1_CONF = 0;
-
-}
-
+void app_read_REG_DO1_CONF(void) {}
 bool app_write_REG_DO1_CONF(void *a)
 {
 	uint8_t reg = *((uint8_t*)a);
+   
+   if (reg & ~MSK_DO_SEL)
+      return false;
+      
+   if ((reg == GM_DO_PULSE_WHEN_UPDATED) || (reg == GM_DO_PULSE_WHEN_ARRAY_LOADED))
+      clr_DO1;
 
 	app_regs.REG_DO1_CONF = reg;
 	return true;

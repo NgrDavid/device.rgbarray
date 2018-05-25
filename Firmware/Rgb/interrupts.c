@@ -49,6 +49,12 @@ void uart1_rcv_byte_callback(uint8_t byte)
 }
 
 /************************************************************************/
+/* Clear DO0 and DO1 pins                                               */
+/************************************************************************/
+ISR(TCC0_OVF_vect, ISR_NAKED) {timer_type0_stop(&TCC0); clr_DO0; reti();}
+ISR(TCD0_OVF_vect, ISR_NAKED) {timer_type0_stop(&TCD0); clr_DO1; reti();}
+
+/************************************************************************/
 /* Slave has a new set of data for the LEDs                             */
 /************************************************************************/
 void load_was_done (void)
@@ -64,7 +70,8 @@ void load_was_done (void)
    
    if (app_regs.REG_DO0_CONF == GM_DO_PULSE_WHEN_ARRAY_LOADED)
    {
-      
+      timer_type0_enable(&TCC0, TIMER_PRESCALER_DIV256, 125, INT_LEVEL_LOW);
+      set_DO0;
    }
    if (app_regs.REG_DO0_CONF == GM_DO_TOGGLE_WHEN_ARRAY_LOADED)
    {
@@ -72,8 +79,9 @@ void load_was_done (void)
    }
    
    if (app_regs.REG_DO1_CONF == GM_DO_PULSE_WHEN_ARRAY_LOADED)
-   {
-      
+   {  
+      timer_type0_enable(&TCD0, TIMER_PRESCALER_DIV256, 125, INT_LEVEL_LOW);
+      set_DO1;
    }
    if (app_regs.REG_DO1_CONF == GM_DO_TOGGLE_WHEN_ARRAY_LOADED)
    {

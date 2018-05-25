@@ -126,6 +126,9 @@ void core_callback_reset_registers(void)
       app_regs.REG_COLOR_ARRAY[i] = 0;
       
    app_regs.REG_OUTPUTS_OUT = 0;
+   app_regs.REG_DI0_CONF = GM_DI0_SYNC;
+   app_regs.REG_DO0_CONF = GM_DO_DIG;
+   app_regs.REG_DO1_CONF = GM_DO_DIG;
       
    app_regs.REG_RESERVED0 = 0;
    app_regs.REG_RESERVED1 = 0;
@@ -133,7 +136,6 @@ void core_callback_reset_registers(void)
    app_regs.REG_RESERVED3 = 0;
    app_regs.REG_RESERVED4 = 0;
    app_regs.REG_RESERVED5 = 0;
-      
    
    app_regs.REG_EVNT_ENABLE = B_EVT_LED_STATUS | B_EVT_INPUTS_STATE;
 }
@@ -148,8 +150,10 @@ void core_callback_registers_were_reinitialized(void)
       app_regs.REG_COLOR_ARRAY[i] = 0;
    
    app_write_REG_OUTPUTS_OUT(&app_regs.REG_OUTPUTS_OUT);
-      
-   //app_regs.REG_DI0_CONF = GM_DI0_HIGH_RGBS_ON;
+   
+   app_write_REG_DI0_CONF(&app_regs.REG_DI0_CONF);
+   app_write_REG_DO0_CONF(&app_regs.REG_DO0_CONF);
+   app_write_REG_DO1_CONF(&app_regs.REG_DO1_CONF);
 }
 
 /************************************************************************/
