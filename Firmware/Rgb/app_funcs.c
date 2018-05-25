@@ -116,7 +116,7 @@ bool app_write_REG_LEDS_ON_BUS(void *a)
 {
 	uint8_t reg = *((uint8_t*)a);
    
-   if (reg > 64)
+   if (reg < 1 || reg > 32)
       return false;
 
 	app_regs.REG_LEDS_ON_BUS = reg;
@@ -289,13 +289,17 @@ bool app_write_REG_INPUTS_STATE(void *a) { return false; }
 /************************************************************************/
 void app_read_REG_OUTPUTS_SET(void)
 {
-	//app_regs.REG_OUTPUTS_SET = 0;
-
+	app_regs.REG_OUTPUTS_SET = 0;
 }
 
 bool app_write_REG_OUTPUTS_SET(void *a)
 {
 	uint8_t reg = *((uint8_t*)a);
+   
+   if (app_regs.REG_DO0_CONF != GM_DO_DIG) reg &= ~B_DO0;
+   if (app_regs.REG_DO1_CONF != GM_DO_DIG) reg &= ~B_DO1;
+   
+   PORTA_OUTSET = (reg << 1) & 0x3E;
 
 	app_regs.REG_OUTPUTS_SET = reg;
 	return true;
@@ -307,13 +311,17 @@ bool app_write_REG_OUTPUTS_SET(void *a)
 /************************************************************************/
 void app_read_REG_OUTPUTS_CLEAR(void)
 {
-	//app_regs.REG_OUTPUTS_CLEAR = 0;
-
+	app_regs.REG_OUTPUTS_CLEAR = 0;
 }
 
 bool app_write_REG_OUTPUTS_CLEAR(void *a)
 {
 	uint8_t reg = *((uint8_t*)a);
+   
+   if (app_regs.REG_DO0_CONF != GM_DO_DIG) reg &= ~B_DO0;
+   if (app_regs.REG_DO1_CONF != GM_DO_DIG) reg &= ~B_DO1;
+      
+   PORTA_OUTCLR = (reg << 1) & 0x3E;
 
 	app_regs.REG_OUTPUTS_CLEAR = reg;
 	return true;
@@ -325,13 +333,17 @@ bool app_write_REG_OUTPUTS_CLEAR(void *a)
 /************************************************************************/
 void app_read_REG_OUTPUTS_TOGGLE(void)
 {
-	//app_regs.REG_OUTPUTS_TOGGLE = 0;
-
+	app_regs.REG_OUTPUTS_TOGGLE = 0;
 }
 
 bool app_write_REG_OUTPUTS_TOGGLE(void *a)
 {
 	uint8_t reg = *((uint8_t*)a);
+   
+   if (app_regs.REG_DO0_CONF != GM_DO_DIG) reg &= ~B_DO0;
+   if (app_regs.REG_DO1_CONF != GM_DO_DIG) reg &= ~B_DO1;
+   
+   PORTA_OUTTGL = (reg << 1) & 0x3E;
 
 	app_regs.REG_OUTPUTS_TOGGLE = reg;
 	return true;
@@ -343,13 +355,21 @@ bool app_write_REG_OUTPUTS_TOGGLE(void *a)
 /************************************************************************/
 void app_read_REG_OUTPUTS_OUT(void)
 {
-	//app_regs.REG_OUTPUTS_OUT = 0;
-
+	app_regs.REG_OUTPUTS_OUT  = read_DO0 ? B_DO0 : 0;
+   app_regs.REG_OUTPUTS_OUT |= read_DO1 ? B_DO1 : 0;
+   app_regs.REG_OUTPUTS_OUT |= read_DO2 ? B_DO2 : 0;
+   app_regs.REG_OUTPUTS_OUT |= read_DO3 ? B_DO3 : 0;
+   app_regs.REG_OUTPUTS_OUT |= read_DO4 ? B_DO4 : 0;
 }
 
 bool app_write_REG_OUTPUTS_OUT(void *a)
 {
 	uint8_t reg = *((uint8_t*)a);
+   
+   if (app_regs.REG_DO0_CONF != GM_DO_DIG) reg &= ~B_DO0;
+   if (app_regs.REG_DO1_CONF != GM_DO_DIG) reg &= ~B_DO1;
+      
+   PORTA_OUT = PORTA_OUT | ((reg << 1) & 0x3E);
 
 	app_regs.REG_OUTPUTS_OUT = reg;
 	return true;

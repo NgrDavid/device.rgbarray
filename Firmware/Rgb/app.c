@@ -125,6 +125,8 @@ void core_callback_reset_registers(void)
    for (uint8_t i = 0; i < 192; i++)
       app_regs.REG_COLOR_ARRAY[i] = 0;
       
+   app_regs.REG_OUTPUTS_OUT = 0;
+      
    app_regs.REG_RESERVED0 = 0;
    app_regs.REG_RESERVED1 = 0;
    app_regs.REG_RESERVED2 = 0;
@@ -144,6 +146,8 @@ void core_callback_registers_were_reinitialized(void)
    
    for (uint8_t i = 0; i < 192; i++)
       app_regs.REG_COLOR_ARRAY[i] = 0;
+   
+   app_write_REG_OUTPUTS_OUT(&app_regs.REG_OUTPUTS_OUT);
       
    //app_regs.REG_DI0_CONF = GM_DI0_HIGH_RGBS_ON;
 }
