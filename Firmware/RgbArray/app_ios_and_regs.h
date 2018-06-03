@@ -199,7 +199,7 @@ typedef struct
 #define B_DO1                              (1<<1)       // 
 #define B_DO2                              (1<<2)       // 
 #define B_DO3                              (1<<3)       // 
-#define B_DO4                              (1<<3)       // 
+#define B_DO4                              (1<<4)       // 
 #define B_EVT_LED_STATUS                   (1<<0)       // Event of register EVT_LED_STATUS
 #define B_EVT_INPUTS_STATE                 (1<<1)       // Event of register EVT_INPUTS_STATE
 
