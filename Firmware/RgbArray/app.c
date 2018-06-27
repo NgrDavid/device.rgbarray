@@ -191,7 +191,54 @@ void core_callback_t_before_exec(void) {}
 void core_callback_t_after_exec(void) {}
 void core_callback_t_new_second(void) {}
 void core_callback_t_500us(void) {}
-void core_callback_t_1ms(void) {}
+
+extern bool start_array_pulses;
+
+uint16_t pulse_counter = 0;
+bool last_array_state = false;
+
+void core_callback_t_1ms(void)
+{
+   if (start_array_pulses)
+   {
+      start_array_pulses = false;
+      
+      pulse_counter = 0;
+      last_array_state = true;
+      
+      uint8_t aux = B_RGB_ON;
+      app_write_REG_LEDS_STATUS(&aux);
+   }
+   else
+   {
+      if (app_regs.REG_PULSE_COUNT > 0)
+      {
+         pulse_counter++;
+         
+         if (pulse_counter == (app_regs.REG_PULSE_PERIOD/2))
+         {
+            pulse_counter = 0;
+            
+            if (last_array_state == false)
+            {
+               last_array_state = true;
+               
+               uint8_t aux = B_RGB_ON;
+               app_write_REG_LEDS_STATUS(&aux);
+            }
+            else
+            {
+               last_array_state = false;
+               
+               uint8_t aux = B_RGB_OFF;
+               app_write_REG_LEDS_STATUS(&aux);
+               
+               app_regs.REG_PULSE_COUNT--;
+            }
+         }
+      }
+   }      
+}
 
 /************************************************************************/
 /* Callbacks: uart control                                              */

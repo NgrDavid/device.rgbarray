@@ -8,6 +8,8 @@ void update_bus (void);
 void start_demo_mode (void);
 void stop_demo_mode (void);
 
+bool start_array_pulses = false;
+
 /************************************************************************/
 /* Create pointers to functions                                         */
 /************************************************************************/
@@ -397,12 +399,15 @@ bool app_write_REG_OUTPUTS_OUT(void *a)
 
 
 /************************************************************************/
-/* REG_PULSE_FREQ                                                       */
+/* REG_PULSE_PERIOD                                                     */
 /************************************************************************/
-void app_read_REG_PULSE_FREQ(void) {}
-bool app_write_REG_PULSE_FREQ(void *a)
-{
-	app_regs.REG_PULSE_FREQ = *((uint8_t*)a);
+void app_read_REG_PULSE_PERIOD(void) {}
+bool app_write_REG_PULSE_PERIOD(void *a)
+{   
+   if (*((uint16_t*)a) < 20)
+      return false;
+   
+	app_regs.REG_PULSE_PERIOD = *((uint16_t*)a);
 	return true;
 }
 
@@ -413,6 +418,8 @@ bool app_write_REG_PULSE_FREQ(void *a)
 void app_read_REG_PULSE_COUNT(void) {}
 bool app_write_REG_PULSE_COUNT(void *a)
 {
+   start_array_pulses = true;
+
 	app_regs.REG_PULSE_COUNT = *((uint8_t*)a);
 	return true;
 }
