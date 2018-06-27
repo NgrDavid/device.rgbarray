@@ -59,33 +59,40 @@ ISR(TCD0_OVF_vect, ISR_NAKED) {timer_type0_stop(&TCD0); clr_DO1; reti();}
 /************************************************************************/
 void load_was_done (void)
 {
-   if ((app_regs.REG_DI0_CONF == GM_DI0_SYNC) ||
-       (app_regs.REG_DI0_CONF == GM_DI0_HIGH_RGBS_ON && read_DI0))
+   if (app_regs.REG_LATCH_NEXT_UPDATE== 0)
    {
-      set_UPDATE_LEDS0;
-      set_UPDATE_LEDS1;
-      clr_UPDATE_LEDS0;
-      clr_UPDATE_LEDS1;
-   }
+      if ((app_regs.REG_DI0_CONF == GM_DI0_SYNC) ||
+          (app_regs.REG_DI0_CONF == GM_DI0_HIGH_RGBS_ON && read_DI0))
+      {
+         set_UPDATE_LEDS0;
+         set_UPDATE_LEDS1;
+         clr_UPDATE_LEDS0;
+         clr_UPDATE_LEDS1;
+      }
    
-   if (app_regs.REG_DO0_CONF == GM_DO_PULSE_WHEN_ARRAY_LOADED)
-   {
-      timer_type0_enable(&TCC0, TIMER_PRESCALER_DIV256, 125, INT_LEVEL_LOW);
-      set_DO0;
-   }
-   if (app_regs.REG_DO0_CONF == GM_DO_TOGGLE_WHEN_ARRAY_LOADED)
-   {
-      tgl_DO0;
-   }
+      if (app_regs.REG_DO0_CONF == GM_DO_PULSE_WHEN_ARRAY_LOADED)
+      {
+         timer_type0_enable(&TCC0, TIMER_PRESCALER_DIV256, 125, INT_LEVEL_LOW);
+         set_DO0;
+      }
+      if (app_regs.REG_DO0_CONF == GM_DO_TOGGLE_WHEN_ARRAY_LOADED)
+      {
+         tgl_DO0;
+      }
    
-   if (app_regs.REG_DO1_CONF == GM_DO_PULSE_WHEN_ARRAY_LOADED)
-   {  
-      timer_type0_enable(&TCD0, TIMER_PRESCALER_DIV256, 125, INT_LEVEL_LOW);
-      set_DO1;
+      if (app_regs.REG_DO1_CONF == GM_DO_PULSE_WHEN_ARRAY_LOADED)
+      {  
+         timer_type0_enable(&TCD0, TIMER_PRESCALER_DIV256, 125, INT_LEVEL_LOW);
+         set_DO1;
+      }
+      if (app_regs.REG_DO1_CONF == GM_DO_TOGGLE_WHEN_ARRAY_LOADED)
+      {
+         tgl_DO1;
+      }
    }
-   if (app_regs.REG_DO1_CONF == GM_DO_TOGGLE_WHEN_ARRAY_LOADED)
+   else
    {
-      tgl_DO1;
+      app_regs.REG_LATCH_NEXT_UPDATE = 0;
    }
 }
 
