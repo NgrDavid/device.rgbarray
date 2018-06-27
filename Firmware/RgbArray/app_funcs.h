@@ -37,8 +37,8 @@ void app_read_REG_OUTPUTS_SET(void);
 void app_read_REG_OUTPUTS_CLEAR(void);
 void app_read_REG_OUTPUTS_TOGGLE(void);
 void app_read_REG_OUTPUTS_OUT(void);
-void app_read_REG_RESERVED4(void);
-void app_read_REG_RESERVED5(void);
+void app_read_REG_PULSE_FREQ(void);
+void app_read_REG_PULSE_COUNT(void);
 void app_read_REG_EVNT_ENABLE(void);
 
 bool app_write_REG_LEDS_STATUS(void *a);
@@ -58,8 +58,8 @@ bool app_write_REG_OUTPUTS_SET(void *a);
 bool app_write_REG_OUTPUTS_CLEAR(void *a);
 bool app_write_REG_OUTPUTS_TOGGLE(void *a);
 bool app_write_REG_OUTPUTS_OUT(void *a);
-bool app_write_REG_RESERVED4(void *a);
-bool app_write_REG_RESERVED5(void *a);
+bool app_write_REG_PULSE_FREQ(void *a);
+bool app_write_REG_PULSE_COUNT(void *a);
 bool app_write_REG_EVNT_ENABLE(void *a);
 
 

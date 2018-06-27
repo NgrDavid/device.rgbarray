@@ -136,8 +136,8 @@ typedef struct
 	uint8_t REG_OUTPUTS_CLEAR;
 	uint8_t REG_OUTPUTS_TOGGLE;
 	uint8_t REG_OUTPUTS_OUT;
-	uint8_t REG_RESERVED4;
-	uint8_t REG_RESERVED5;
+	uint8_t REG_PULSE_FREQ;
+	uint8_t REG_PULSE_COUNT;
 	uint8_t REG_EVNT_ENABLE;
 } AppRegs;
 
@@ -162,8 +162,8 @@ typedef struct
 #define ADD_REG_OUTPUTS_CLEAR               46 // U8     Clear the correspondent output
 #define ADD_REG_OUTPUTS_TOGGLE              47 // U8     Toggle the correspondent output
 #define ADD_REG_OUTPUTS_OUT                 48 // U8     Control the correspondent output
-#define ADD_REG_RESERVED4                   49 // U8     
-#define ADD_REG_RESERVED5                   50 // U8     
+#define ADD_REG_PULSE_FREQ                  49 // U8     Frequency of the pulse mode
+#define ADD_REG_PULSE_COUNT                 50 // U8     Number of pulses to be performed -- write different than 0 to start
 #define ADD_REG_EVNT_ENABLE                 51 // U8     Enable the Events
 
 /************************************************************************/

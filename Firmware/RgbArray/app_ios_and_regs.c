@@ -116,7 +116,7 @@ uint8_t *app_regs_pointer[] = {
 	(uint8_t*)(&app_regs.REG_OUTPUTS_CLEAR),
 	(uint8_t*)(&app_regs.REG_OUTPUTS_TOGGLE),
 	(uint8_t*)(&app_regs.REG_OUTPUTS_OUT),
-	(uint8_t*)(&app_regs.REG_RESERVED4),
-	(uint8_t*)(&app_regs.REG_RESERVED5),
+	(uint8_t*)(&app_regs.REG_PULSE_FREQ),
+	(uint8_t*)(&app_regs.REG_PULSE_COUNT),
 	(uint8_t*)(&app_regs.REG_EVNT_ENABLE)
 };

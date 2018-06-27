@@ -31,8 +31,8 @@ void (*app_func_rd_pointer[])(void) = {
 	&app_read_REG_OUTPUTS_CLEAR,
 	&app_read_REG_OUTPUTS_TOGGLE,
 	&app_read_REG_OUTPUTS_OUT,
-	&app_read_REG_RESERVED4,
-	&app_read_REG_RESERVED5,
+	&app_read_REG_PULSE_FREQ,
+	&app_read_REG_PULSE_COUNT,
 	&app_read_REG_EVNT_ENABLE
 };
 
@@ -54,8 +54,8 @@ bool (*app_func_wr_pointer[])(void*) = {
 	&app_write_REG_OUTPUTS_CLEAR,
 	&app_write_REG_OUTPUTS_TOGGLE,
 	&app_write_REG_OUTPUTS_OUT,
-	&app_write_REG_RESERVED4,
-	&app_write_REG_RESERVED5,
+	&app_write_REG_PULSE_FREQ,
+	&app_write_REG_PULSE_COUNT,
 	&app_write_REG_EVNT_ENABLE
 };
 
@@ -397,23 +397,23 @@ bool app_write_REG_OUTPUTS_OUT(void *a)
 
 
 /************************************************************************/
-/* REG_RESERVED4                                                        */
+/* REG_PULSE_FREQ                                                       */
 /************************************************************************/
-void app_read_REG_RESERVED4(void) {}
-bool app_write_REG_RESERVED4(void *a)
+void app_read_REG_PULSE_FREQ(void) {}
+bool app_write_REG_PULSE_FREQ(void *a)
 {
-	app_regs.REG_RESERVED4 = *((uint8_t*)a);
+	app_regs.REG_PULSE_FREQ = *((uint8_t*)a);
 	return true;
 }
 
 
 /************************************************************************/
-/* REG_RESERVED5                                                        */
+/* REG_PULSE_COUNT                                                      */
 /************************************************************************/
-void app_read_REG_RESERVED5(void) {}
-bool app_write_REG_RESERVED5(void *a)
+void app_read_REG_PULSE_COUNT(void) {}
+bool app_write_REG_PULSE_COUNT(void *a)
 {
-	app_regs.REG_RESERVED5 = *((uint8_t*)a);
+	app_regs.REG_PULSE_COUNT = *((uint8_t*)a);
 	return true;
 }
 
