@@ -145,10 +145,11 @@ void core_callback_reset_registers(void)
    app_regs.REG_RESERVED0 = 0;
    app_regs.REG_RESERVED1 = 0;
    app_regs.REG_RESERVED2 = 0;
-   app_regs.REG_RESERVED3 = 0;
    
-   app_regs.REG_PULSE_FREQ = 5;
-   app_regs.REG_PULSE_COUNT = 10;
+   app_regs.REG_LATCH_NEXT_UPDATE = 0;
+   
+   app_regs.REG_PULSE_PERIOD = 100;
+   app_regs.REG_PULSE_COUNT = 0;
    
    app_regs.REG_EVNT_ENABLE = B_EVT_LED_STATUS | B_EVT_INPUTS_STATE;
 }

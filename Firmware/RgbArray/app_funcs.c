@@ -25,13 +25,13 @@ void (*app_func_rd_pointer[])(void) = {
 	&app_read_REG_DO0_CONF,
 	&app_read_REG_DO1_CONF,
 	&app_read_REG_RESERVED2,
-	&app_read_REG_RESERVED3,
+	&app_read_REG_LATCH_NEXT_UPDATE,
 	&app_read_REG_INPUTS_STATE,
 	&app_read_REG_OUTPUTS_SET,
 	&app_read_REG_OUTPUTS_CLEAR,
 	&app_read_REG_OUTPUTS_TOGGLE,
 	&app_read_REG_OUTPUTS_OUT,
-	&app_read_REG_PULSE_FREQ,
+	&app_read_REG_PULSE_PERIOD,
 	&app_read_REG_PULSE_COUNT,
 	&app_read_REG_EVNT_ENABLE
 };
@@ -48,13 +48,13 @@ bool (*app_func_wr_pointer[])(void*) = {
 	&app_write_REG_DO0_CONF,
 	&app_write_REG_DO1_CONF,
 	&app_write_REG_RESERVED2,
-	&app_write_REG_RESERVED3,
+	&app_write_REG_LATCH_NEXT_UPDATE,
 	&app_write_REG_INPUTS_STATE,
 	&app_write_REG_OUTPUTS_SET,
 	&app_write_REG_OUTPUTS_CLEAR,
 	&app_write_REG_OUTPUTS_TOGGLE,
 	&app_write_REG_OUTPUTS_OUT,
-	&app_write_REG_PULSE_FREQ,
+	&app_write_REG_PULSE_PERIOD,
 	&app_write_REG_PULSE_COUNT,
 	&app_write_REG_EVNT_ENABLE
 };
@@ -289,10 +289,10 @@ bool app_write_REG_RESERVED2(void *a)
 /************************************************************************/
 /* REG_RESERVED3                                                        */
 /************************************************************************/
-void app_read_REG_RESERVED3(void) {}
-bool app_write_REG_RESERVED3(void *a)
+void app_read_REG_LATCH_NEXT_UPDATE(void) {}
+bool app_write_REG_LATCH_NEXT_UPDATE(void *a)
 {
-	app_regs.REG_RESERVED3 = *((uint8_t*)a);
+	app_regs.REG_LATCH_NEXT_UPDATE = *((uint8_t*)a);
 	return true;
 }
 

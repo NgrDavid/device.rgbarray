@@ -130,13 +130,13 @@ typedef struct
 	uint8_t REG_DO0_CONF;
 	uint8_t REG_DO1_CONF;
 	uint8_t REG_RESERVED2;
-	uint8_t REG_RESERVED3;
+	uint8_t REG_LATCH_NEXT_UPDATE;
 	uint8_t REG_INPUTS_STATE;
 	uint8_t REG_OUTPUTS_SET;
 	uint8_t REG_OUTPUTS_CLEAR;
 	uint8_t REG_OUTPUTS_TOGGLE;
 	uint8_t REG_OUTPUTS_OUT;
-	uint8_t REG_PULSE_FREQ;
+	uint16_t REG_PULSE_PERIOD;
 	uint8_t REG_PULSE_COUNT;
 	uint8_t REG_EVNT_ENABLE;
 } AppRegs;
@@ -156,13 +156,13 @@ typedef struct
 #define ADD_REG_DO0_CONF                    40 // U8     Configuration of the digital output 0 (DO0)
 #define ADD_REG_DO1_CONF                    41 // U8     Configuration of the digital output 1 (DO1)
 #define ADD_REG_RESERVED2                   42 // U8     
-#define ADD_REG_RESERVED3                   43 // U8     
+#define ADD_REG_LATCH_NEXT_UPDATE           43 // U8     Any value above 0 will latch the next LED array update
 #define ADD_REG_INPUTS_STATE                44 // U8     Read the correspondent input pin
 #define ADD_REG_OUTPUTS_SET                 45 // U8     Set the correspondent output
 #define ADD_REG_OUTPUTS_CLEAR               46 // U8     Clear the correspondent output
 #define ADD_REG_OUTPUTS_TOGGLE              47 // U8     Toggle the correspondent output
 #define ADD_REG_OUTPUTS_OUT                 48 // U8     Control the correspondent output
-#define ADD_REG_PULSE_FREQ                  49 // U8     Frequency of the pulse mode
+#define ADD_REG_PULSE_PERIOD                49 // U16    Period of pulses (ms)
 #define ADD_REG_PULSE_COUNT                 50 // U8     Number of pulses to be performed -- write different than 0 to start
 #define ADD_REG_EVNT_ENABLE                 51 // U8     Enable the Events
 
@@ -175,7 +175,7 @@ typedef struct
 /* Memory limits */
 #define APP_REGS_ADD_MIN                    0x20
 #define APP_REGS_ADD_MAX                    0x33
-#define APP_NBYTES_OF_REG_BANK              401
+#define APP_NBYTES_OF_REG_BANK              402
 
 /************************************************************************/
 /* Registers' bits                                                      */

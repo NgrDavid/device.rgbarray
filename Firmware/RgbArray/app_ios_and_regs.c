@@ -70,7 +70,7 @@ uint8_t app_regs_type[] = {
 	TYPE_U8,
 	TYPE_U8,
 	TYPE_U8,
-	TYPE_U8,
+	TYPE_U16,
 	TYPE_U8,
 	TYPE_U8
 };
@@ -110,13 +110,13 @@ uint8_t *app_regs_pointer[] = {
 	(uint8_t*)(&app_regs.REG_DO0_CONF),
 	(uint8_t*)(&app_regs.REG_DO1_CONF),
 	(uint8_t*)(&app_regs.REG_RESERVED2),
-	(uint8_t*)(&app_regs.REG_RESERVED3),
+	(uint8_t*)(&app_regs.REG_LATCH_NEXT_UPDATE),
 	(uint8_t*)(&app_regs.REG_INPUTS_STATE),
 	(uint8_t*)(&app_regs.REG_OUTPUTS_SET),
 	(uint8_t*)(&app_regs.REG_OUTPUTS_CLEAR),
 	(uint8_t*)(&app_regs.REG_OUTPUTS_TOGGLE),
 	(uint8_t*)(&app_regs.REG_OUTPUTS_OUT),
-	(uint8_t*)(&app_regs.REG_PULSE_FREQ),
+	(uint8_t*)(&app_regs.REG_PULSE_PERIOD),
 	(uint8_t*)(&app_regs.REG_PULSE_COUNT),
 	(uint8_t*)(&app_regs.REG_EVNT_ENABLE)
 };
