@@ -7,6 +7,7 @@
 void update_bus (void);
 void start_demo_mode (void);
 void stop_demo_mode (void);
+void define_off_values (uint8_t red, uint8_t green, uint8_t blue);
 
 bool start_array_pulses = false;
 
@@ -21,7 +22,7 @@ void (*app_func_rd_pointer[])(void) = {
 	&app_read_REG_COLOR_ARRAY,
 	&app_read_REG_COLOR_ARRAY_BUS0,
 	&app_read_REG_COLOR_ARRAY_BUS1,
-	&app_read_REG_RESERVED0,
+	&app_read_REG_COLOR_OFF,
 	&app_read_REG_RESERVED1,
 	&app_read_REG_DI0_CONF,
 	&app_read_REG_DO0_CONF,
@@ -44,7 +45,7 @@ bool (*app_func_wr_pointer[])(void*) = {
 	&app_write_REG_COLOR_ARRAY,
 	&app_write_REG_COLOR_ARRAY_BUS0,
 	&app_write_REG_COLOR_ARRAY_BUS1,
-	&app_write_REG_RESERVED0,
+	&app_write_REG_COLOR_OFF,
 	&app_write_REG_RESERVED1,
 	&app_write_REG_DI0_CONF,
 	&app_write_REG_DO0_CONF,
@@ -65,11 +66,7 @@ bool (*app_func_wr_pointer[])(void*) = {
 /************************************************************************/
 /* REG_LEDS_STATUS                                                      */
 /************************************************************************/
-void app_read_REG_LEDS_STATUS(void)
-{
-	app_regs.REG_LEDS_STATUS = 0;
-}
-
+void app_read_REG_LEDS_STATUS(void) {}
 bool app_write_REG_LEDS_STATUS(void *a)
 {
 	uint8_t reg = *((uint8_t*)a);
@@ -184,13 +181,34 @@ bool app_write_REG_COLOR_ARRAY_BUS1(void *a)
 /************************************************************************/
 /* REG_RESERVED0                                                        */
 /************************************************************************/
-void app_read_REG_RESERVED0(void) {}
-bool app_write_REG_RESERVED0(void *a)
+void app_read_REG_COLOR_OFF(void) {}
+bool app_write_REG_COLOR_OFF(void *a)
 {
-	app_regs.REG_RESERVED0 = *((uint8_t*)a);
+   app_regs.REG_COLOR_OFF[0] = *(((uint8_t*)a) + 0);
+   app_regs.REG_COLOR_OFF[1] = *(((uint8_t*)a) + 1);
+   app_regs.REG_COLOR_OFF[2] = *(((uint8_t*)a) + 2);
+   
+   define_off_values(app_regs.REG_COLOR_OFF[0], app_regs.REG_COLOR_OFF[1], app_regs.REG_COLOR_OFF[2]);
+   
+   if (app_regs.REG_LEDS_STATUS & B_RGB_OFF)
+   {
+      timer_type1_enable(&TCD1, TIMER_PRESCALER_DIV256, 32, INT_LEVEL_LOW);  // 256 us
+   }
+   
 	return true;
 }
 
+ISR(TCD1_OVF_vect, ISR_NAKED)
+{
+   timer_type1_stop(&TCD1);
+
+   set_DISABLE_LEDS0;
+   set_DISABLE_LEDS1;
+   clr_DISABLE_LEDS0;
+   clr_DISABLE_LEDS1;
+   
+   reti();
+}
 
 /************************************************************************/
 /* REG_RESERVED1                                                        */

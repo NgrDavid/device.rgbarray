@@ -124,7 +124,7 @@ typedef struct
 	uint8_t REG_COLOR_ARRAY[192];
 	uint8_t REG_COLOR_ARRAY_BUS0[96];
 	uint8_t REG_COLOR_ARRAY_BUS1[96];
-	uint8_t REG_RESERVED0;
+	uint8_t REG_COLOR_OFF[3];
 	uint8_t REG_RESERVED1;
 	uint8_t REG_DI0_CONF;
 	uint8_t REG_DO0_CONF;
@@ -150,7 +150,7 @@ typedef struct
 #define ADD_REG_COLOR_ARRAY                 34 // U8     RGBs' values on the format R G B
 #define ADD_REG_COLOR_ARRAY_BUS0            35 // U8     RGBs' values for the bus 0 on the format R G B
 #define ADD_REG_COLOR_ARRAY_BUS1            36 // U8     RGBs' values for the bus 1 on the format R G B
-#define ADD_REG_RESERVED0                   37 // U8     
+#define ADD_REG_COLOR_OFF                   37 // U8     RGBs' values when the BUS is in off mode
 #define ADD_REG_RESERVED1                   38 // U8     
 #define ADD_REG_DI0_CONF                    39 // U8     Configuration of the digital input 0 (DI0)
 #define ADD_REG_DO0_CONF                    40 // U8     Configuration of the digital output 0 (DO0)
@@ -175,7 +175,7 @@ typedef struct
 /* Memory limits */
 #define APP_REGS_ADD_MIN                    0x20
 #define APP_REGS_ADD_MAX                    0x33
-#define APP_NBYTES_OF_REG_BANK              402
+#define APP_NBYTES_OF_REG_BANK              404
 
 /************************************************************************/
 /* Registers' bits                                                      */

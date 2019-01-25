@@ -101,8 +101,9 @@ int main(void)
 #define STOP_TIMEOUT timer_type0_stop(&TCC0)
 
 // Protocol:
-// RGB array: 'r' 'g' 'b' num_of_leds_on_bus array[num_of_leds_on_bus * 3]
-// RGB demo:  'r' 'g' 'c' num_of_leds_on_bus
+// RGB array:       'r' 'g' 'b' num_of_leds_on_bus array [num_of_leds_on_bus * 3]
+// RGB demo:        'r' 'g' 'c' num_of_leds_on_bus
+// RGB off values:  'r' 'g' 'd' num_of_leds_on_bus red green blue
 
 void uart0_rcv_byte_callback(uint8_t byte)
 {
@@ -130,7 +131,7 @@ void uart0_rcv_byte_callback(uint8_t byte)
             }
             break;
       case 2:
-            if (byte == 'b' || byte == 'c')
+            if (byte == 'b' || byte == 'c' || byte == 'd')
             {
                rx_state++;
                _3rd_byte = byte;
@@ -164,23 +165,44 @@ void uart0_rcv_byte_callback(uint8_t byte)
             break;
       
       case 4:
-            rxbuff_uart0[uart0_rx_pointer++] = byte;
-            RESET_TIMEOUT;
+            if (_3rd_byte == 'b')
+            {
+               rxbuff_uart0[uart0_rx_pointer++] = byte;
+               RESET_TIMEOUT;
             
-            if (uart0_rx_pointer == num_of_leds_on_bus * 3 /*+ 1*/)
-            {  
-               STOP_TIMEOUT;
-               rx_state = 0;
+               if (uart0_rx_pointer == num_of_leds_on_bus * 3 /*+ 1*/)
+               {  
+                  STOP_TIMEOUT;
+                  rx_state = 0;
                
-               uart0_xmit_now_byte(EVENT_LOAD_DONE);
+                  uart0_xmit_now_byte(EVENT_LOAD_DONE);
                   
-               for (uint16_t i = 0; i < num_of_leds_on_bus; i++)
-               {
-                  *((&grb_on[0][0]) + i*3 + 0) = rxbuff_uart0[i*3 + 1];
-                  *((&grb_on[0][0]) + i*3 + 1) = rxbuff_uart0[i*3 + 0];
-                  *((&grb_on[0][0]) + i*3 + 2) = rxbuff_uart0[i*3 + 2];
+                  for (uint16_t i = 0; i < num_of_leds_on_bus; i++)
+                  {
+                     *((&grb_on[0][0]) + i*3 + 0) = rxbuff_uart0[i*3 + 1];
+                     *((&grb_on[0][0]) + i*3 + 1) = rxbuff_uart0[i*3 + 0];
+                     *((&grb_on[0][0]) + i*3 + 2) = rxbuff_uart0[i*3 + 2];
+                  }
                }
             }
+            if (_3rd_byte == 'd')
+            {
+               rxbuff_uart0[uart0_rx_pointer++] = byte;
+               RESET_TIMEOUT;
+            
+               if (uart0_rx_pointer == 3)
+               {
+                  STOP_TIMEOUT;
+                  rx_state = 0;
+               
+                  for (uint16_t i = 0; i < num_of_leds_on_bus; i++)
+                  {
+                     *((&grb_off[0][0]) + i*3 + 0) = rxbuff_uart0[1];
+                     *((&grb_off[0][0]) + i*3 + 1) = rxbuff_uart0[0];
+                     *((&grb_off[0][0]) + i*3 + 2) = rxbuff_uart0[2];
+                  }
+               }
+            }              
    }
 }
 
@@ -229,7 +251,8 @@ ISR(PORTC_INT1_vect, ISR_NAKED)
 /************************************************************************/
 /* Demonstration mode                                                   */
 /************************************************************************/
-#define FINISH_DEMO do {if (!read_DEMO_MODE) {update_32rgbs(&grb_off[0][0]); return;} } while(0)
+//#define FINISH_DEMO do {if (!read_DEMO_MODE) {update_32rgbs(&grb_off[0][0]); return;} } while(0)
+#define FINISH_DEMO do {if (!read_DEMO_MODE) {update_ws2812_bus(&grb_off[0][0], num_of_leds_on_bus); return;} } while(0)
    
 void demo_mode (void)
 {
@@ -261,31 +284,32 @@ void demo_mode (void)
          }
       }
       
-      for (uint16_t i = 0; i < num_of_leds_on_bus; i++)
-         for (uint8_t j = 0; j < 3; j++)
-         {
-            grb_demo[i][j] = 64;
-         }
-      
-      FINISH_DEMO; update_ws2812_bus(&grb_off[0][0], num_of_leds_on_bus); //update_32rgbs(&grb_off[0][0]);
+      for (uint16_t i = 0; i < num_of_leds_on_bus; i++) for (uint8_t j = 0; j < 3; j++) grb_demo[i][j] = 64;
+      FINISH_DEMO; update_ws2812_bus(&grb_demo[0][0], num_of_leds_on_bus);
       FINISH_DEMO; _delay_ms(250);
       
-      FINISH_DEMO; update_ws2812_bus(&grb_demo[0][0], num_of_leds_on_bus); //update_32rgbs(&grb_on[0][0]);
+      for (uint16_t i = 0; i < num_of_leds_on_bus; i++) for (uint8_t j = 0; j < 3; j++) grb_demo[i][j] = 64;
+      FINISH_DEMO; update_ws2812_bus(&grb_demo[0][0], num_of_leds_on_bus);
       FINISH_DEMO; _delay_ms(250);
       
-      FINISH_DEMO; update_ws2812_bus(&grb_off[0][0], num_of_leds_on_bus); //update_32rgbs(&grb_off[0][0]);
+      for (uint16_t i = 0; i < num_of_leds_on_bus; i++) for (uint8_t j = 0; j < 3; j++) grb_demo[i][j] = 0;
+      FINISH_DEMO; update_ws2812_bus(&grb_demo[0][0], num_of_leds_on_bus);
       FINISH_DEMO; _delay_ms(250);
       
-      FINISH_DEMO; update_ws2812_bus(&grb_demo[0][0], num_of_leds_on_bus); //update_32rgbs(&grb_on[0][0]);
-      FINISH_DEMO; _delay_ms(250);      
+      for (uint16_t i = 0; i < num_of_leds_on_bus; i++) for (uint8_t j = 0; j < 3; j++) grb_demo[i][j] = 64;
+      FINISH_DEMO; update_ws2812_bus(&grb_demo[0][0], num_of_leds_on_bus);
+      FINISH_DEMO; _delay_ms(250);
       
-      FINISH_DEMO; update_ws2812_bus(&grb_off[0][0], num_of_leds_on_bus); //update_32rgbs(&grb_off[0][0]);
-      FINISH_DEMO; _delay_ms(250);      
+      for (uint16_t i = 0; i < num_of_leds_on_bus; i++) for (uint8_t j = 0; j < 3; j++) grb_demo[i][j] = 0;
+      FINISH_DEMO; update_ws2812_bus(&grb_demo[0][0], num_of_leds_on_bus);
+      FINISH_DEMO; _delay_ms(250);
       
-      FINISH_DEMO; update_ws2812_bus(&grb_demo[0][0], num_of_leds_on_bus); //update_32rgbs(&grb_on[0][0]);
-      FINISH_DEMO; _delay_ms(250);      
+      for (uint16_t i = 0; i < num_of_leds_on_bus; i++) for (uint8_t j = 0; j < 3; j++) grb_demo[i][j] = 64;
+      FINISH_DEMO; update_ws2812_bus(&grb_demo[0][0], num_of_leds_on_bus);
+      FINISH_DEMO; _delay_ms(250);
       
-      FINISH_DEMO; update_ws2812_bus(&grb_off[0][0], num_of_leds_on_bus); //update_32rgbs(&grb_off[0][0]);
+      for (uint16_t i = 0; i < num_of_leds_on_bus; i++) for (uint8_t j = 0; j < 3; j++) grb_demo[i][j] = 0;      
+      FINISH_DEMO; update_ws2812_bus(&grb_demo[0][0], num_of_leds_on_bus);
       FINISH_DEMO; _delay_ms(250);  
       
       for (uint8_t intensity = 0; intensity < 128; intensity++)
@@ -312,7 +336,8 @@ void demo_mode (void)
          FINISH_DEMO; _delay_ms(20);
       }
       
-      FINISH_DEMO; update_ws2812_bus(&grb_off[0][0], num_of_leds_on_bus); //update_32rgbs(&grb_off[0][0]);
+      for (uint16_t i = 0; i < num_of_leds_on_bus; i++) for (uint8_t j = 0; j < 3; j++) grb_demo[i][j] = 0;   
+      FINISH_DEMO; update_ws2812_bus(&grb_demo[0][0], num_of_leds_on_bus);
       FINISH_DEMO; _delay_ms(250);
    }
 }

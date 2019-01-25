@@ -9,6 +9,9 @@
 #include "uart0.h"
 #include "uart1.h"
 
+#define F_CPU 32000000
+#include "util/delay.h"
+
 /************************************************************************/
 /* Declare application registers                                        */
 /************************************************************************/
@@ -29,8 +32,8 @@ void hwbp_app_initialize(void)
 	   /* Define versions */
     uint8_t hwH = 1;
     uint8_t hwL = 0;
-    uint8_t fwH = 1;
-    uint8_t fwL = 1;
+    uint8_t fwH = 2;
+    uint8_t fwL = 0;
     uint8_t ass = 0;
     
    	/* Start core */
@@ -75,7 +78,8 @@ void core_callback_catastrophic_error_detected(void)
 /* General used functions                                               */
 /************************************************************************/
 uint8_t cmd_array[4] = {'r', 'g', 'b', 0};   // Command and REG_LEDS_ON_BUS/2
-uint8_t cmd_demo[4]  = {'r', 'g', 'c', 0};   // Command and REG_LEDS_ON_BUS/2   
+uint8_t cmd_demo[4]  = {'r', 'g', 'c', 0};   // Command and REG_LEDS_ON_BUS/2
+uint8_t cmd_off[4]  = {'r', 'g', 'd', 0};   // Command and REG_LEDS_ON_BUS/2
    
 void update_bus (void)
 {
@@ -85,9 +89,9 @@ void update_bus (void)
    cmd_array[3] = app_regs.REG_LEDS_ON_BUS;
    
    uart0_xmit(cmd_array, 4);
-   uart0_xmit(app_regs.REG_COLOR_ARRAY, cmd_array[3] * 3);
-   
    uart1_xmit(cmd_array, 4);
+   
+   uart0_xmit(app_regs.REG_COLOR_ARRAY, cmd_array[3] * 3);
    uart1_xmit(app_regs.REG_COLOR_ARRAY + 96, cmd_array[3] * 3);
 }
 
@@ -99,10 +103,25 @@ void start_demo_mode (void)
    set_DEMO_MODE1;
    
    uart0_xmit(cmd_demo, 3);
-   uart0_xmit(&leds_on_bus, 1);
-   
    uart1_xmit(cmd_demo, 3);
+   
+   uart0_xmit(&leds_on_bus, 1);
    uart1_xmit(&leds_on_bus, 1);
+}
+
+void define_off_values (uint8_t red, uint8_t green, uint8_t blue)
+{
+   clr_DEMO_MODE0;   // Stop demonstration mode if active
+   clr_DEMO_MODE1;
+   
+   cmd_off[3] = app_regs.REG_LEDS_ON_BUS;   
+   uint8_t rgb[3] = {red, green, blue};
+   
+   uart0_xmit(cmd_off, 4);   
+   uart1_xmit(cmd_off, 4);
+   
+   uart0_xmit(rgb, 3);
+   uart1_xmit(rgb, 3);
 }
 
 void stop_demo_mode (void)
@@ -142,7 +161,10 @@ void core_callback_reset_registers(void)
    app_regs.REG_DO0_CONF = GM_DO_DIG;
    app_regs.REG_DO1_CONF = GM_DO_DIG;
       
-   app_regs.REG_RESERVED0 = 0;
+   app_regs.REG_COLOR_OFF[0] = 0;
+   app_regs.REG_COLOR_OFF[1] = 0;
+   app_regs.REG_COLOR_OFF[2] = 0;
+   
    app_regs.REG_RESERVED1 = 0;
    app_regs.REG_RESERVED2 = 0;
    
@@ -158,10 +180,11 @@ void core_callback_registers_were_reinitialized(void)
 {  
    stop_demo_mode();
    
-   app_regs.REG_LEDS_STATUS = 0;
+   app_regs.REG_LEDS_STATUS = B_RGB_OFF;
    
-   for (uint8_t i = 0; i < 192; i++)
-      app_regs.REG_COLOR_ARRAY[i] = 0;
+   _delay_ms(200);
+   define_off_values(app_regs.REG_COLOR_OFF[0], app_regs.REG_COLOR_OFF[1], app_regs.REG_COLOR_OFF[2]);
+   timer_type1_enable(&TCD1, TIMER_PRESCALER_DIV256, 3125, INT_LEVEL_LOW);  // 25 ms
    
    app_write_REG_OUTPUTS_OUT(&app_regs.REG_OUTPUTS_OUT);
    
