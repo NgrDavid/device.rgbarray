@@ -1,8 +1,8 @@
-## Harp RGB ##
+## Harp RGB Array##
 
 Controls 2 arrays of colored LEDs according to RGB scale (Up to 32 LED on each array). Each LED has an associated index.
 
-![harprgb](./docs/assets/RGBController.png)
+![harprgbarray](./docs/assets/pcb.png)
 
 ### Key Features ###
 
