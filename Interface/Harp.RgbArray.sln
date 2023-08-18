@@ -1,0 +1,25 @@
+
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32825.248
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9B2E00B8-401A-48DB-86FB-37B00C8FD508}") = "Harp.RgbArray", "Harp.RgbArray\Harp.RgbArray.csproj", "{EDDF0906-0230-4DD6-9350-7B0CB313D453}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EDDF0906-0230-4DD6-9350-7B0CB313D453}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EDDF0906-0230-4DD6-9350-7B0CB313D453}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EDDF0906-0230-4DD6-9350-7B0CB313D453}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EDDF0906-0230-4DD6-9350-7B0CB313D453}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {22F433E4-A2EC-44E6-8C2E-4D8D8897899A}
+	EndGlobalSection
+EndGlobal
