@@ -6,11 +6,11 @@ whoAmI: 1264
 firmwareVersion: "2.0"
 hardwareTargets: "1.0"
 registers:
-  LedStatus: #TODO confusing. Should be a groupmask? Or how can we turn things off and on at the same time?
+  LedStatus:
     address: 32
     type: U8
     access: [Event, Write]
-  NumberOfLeds: #TODO Do they need to have the same number on each bus?
+  NumberOfLeds:
     address: 33
     type: U8
     access: Write
@@ -21,22 +21,19 @@ registers:
     type: U8
     length: 192
     access: Write
-    description: |
-      The RGB color of each LED. The first 3 bytes are the RGB color of the first LED, the next 3 bytes are the RGB color of the second LED, and so on.
+    description: The RGB color of each LED. [R0 G0 B0 R1 G1 B1 ...].
   SetRgbBus0:
     address: 35
     type: U8
     length: 96
     access: Write
-    description: |
-      The RGB color of each LED. The first 3 bytes are the RGB color of the first LED, the next 3 bytes are the RGB color of the second LED, and so on.
+    description: The RGB color of each LED. [R0 G0 B0 R1 G1 B1 ...].
   SetRgbBus1:
     address: 36
     type: U8
     length: 96
     access: Write
-    description: |
-      The RGB color of each LED. The first 3 bytes are the RGB color of the first LED, the next 3 bytes are the RGB color of the second LED, and so on.
+    description: The RGB color of each LED. [R0 G0 B0 R1 G1 B1 ...].
   SetRgbOff:
     address: 37
     type: U8
@@ -67,12 +64,12 @@ registers:
   Reserved1:
     <<: *reserved
     address: 42
-  LatchOnNextUpdate: #TODO Not sure what this does???
+  LatchOnNextUpdate:
     address: 43
     type: U8
     access: Write
     maskType: EnableFlag
-    description: Latches the next update.
+    description: Updates the settings of the RGBs, but will queue the instruction until a valid LedStatus command.
   DigitalInputState:
     address: 44
     access: Event
@@ -97,12 +94,12 @@ registers:
     <<: *output
     address: 48
     description: Write the state of all digital output lines
-  DigitalOutputPulsePeriod: #TODO Is there a way to select to which channels this applies to?
+  DigitalOutputPulsePeriod:
     address: 49
     type: U16
     access: Write
     description: The pulse period in milliseconds for digital outputs.
-  DigitalOutputPulseCount: #TODO Is there a way to select to which channels this applies to?
+  DigitalOutputPulseCount:
     address: 50
     type: U8
     access: Write
