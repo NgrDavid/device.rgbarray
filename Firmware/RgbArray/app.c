@@ -45,9 +45,9 @@ void hwbp_app_initialize(void)
         (uint8_t*)(&app_regs),
         APP_NBYTES_OF_REG_BANK,
         APP_REGS_ADD_MAX - APP_REGS_ADD_MIN + 1,
-	   default_device_name,
-	   true,	// The device is _not_ able to repeat the harp timestamp clock
-	   true	// The device is _not_ able to generate the harp timestamp clock
+		default_device_name,
+		false,	// The device is _not_ able to repeat the harp timestamp clock
+		false	// The device is _not_ able to generate the harp timestamp clock
     );
 }
 
