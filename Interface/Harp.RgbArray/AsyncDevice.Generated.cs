@@ -92,7 +92,7 @@ namespace Harp.RgbArray
         }
 
         /// <summary>
-        /// Asynchronously reads the contents of the NumberOfLeds register.
+        /// Asynchronously reads the contents of the LedCount register.
         /// </summary>
         /// <param name="cancellationToken">
         /// A <see cref="CancellationToken"/> which can be used to cancel the operation.
@@ -101,14 +101,14 @@ namespace Harp.RgbArray
         /// A task that represents the asynchronous read operation. The <see cref="Task{TResult}.Result"/>
         /// property contains the register payload.
         /// </returns>
-        public async Task<byte> ReadNumberOfLedsAsync(CancellationToken cancellationToken = default)
+        public async Task<byte> ReadLedCountAsync(CancellationToken cancellationToken = default)
         {
-            var reply = await CommandAsync(HarpCommand.ReadByte(NumberOfLeds.Address), cancellationToken);
-            return NumberOfLeds.GetPayload(reply);
+            var reply = await CommandAsync(HarpCommand.ReadByte(LedCount.Address), cancellationToken);
+            return LedCount.GetPayload(reply);
         }
 
         /// <summary>
-        /// Asynchronously reads the timestamped contents of the NumberOfLeds register.
+        /// Asynchronously reads the timestamped contents of the LedCount register.
         /// </summary>
         /// <param name="cancellationToken">
         /// A <see cref="CancellationToken"/> which can be used to cancel the operation.
@@ -117,28 +117,28 @@ namespace Harp.RgbArray
         /// A task that represents the asynchronous read operation. The <see cref="Task{TResult}.Result"/>
         /// property contains the timestamped register payload.
         /// </returns>
-        public async Task<Timestamped<byte>> ReadTimestampedNumberOfLedsAsync(CancellationToken cancellationToken = default)
+        public async Task<Timestamped<byte>> ReadTimestampedLedCountAsync(CancellationToken cancellationToken = default)
         {
-            var reply = await CommandAsync(HarpCommand.ReadByte(NumberOfLeds.Address), cancellationToken);
-            return NumberOfLeds.GetTimestampedPayload(reply);
+            var reply = await CommandAsync(HarpCommand.ReadByte(LedCount.Address), cancellationToken);
+            return LedCount.GetTimestampedPayload(reply);
         }
 
         /// <summary>
-        /// Asynchronously writes a value to the NumberOfLeds register.
+        /// Asynchronously writes a value to the LedCount register.
         /// </summary>
         /// <param name="value">The value to be stored in the register.</param>
         /// <param name="cancellationToken">
         /// A <see cref="CancellationToken"/> which can be used to cancel the operation.
         /// </param>
         /// <returns>The task object representing the asynchronous write operation.</returns>
-        public async Task WriteNumberOfLedsAsync(byte value, CancellationToken cancellationToken = default)
+        public async Task WriteLedCountAsync(byte value, CancellationToken cancellationToken = default)
         {
-            var request = NumberOfLeds.FromPayload(MessageType.Write, value);
+            var request = LedCount.FromPayload(MessageType.Write, value);
             await CommandAsync(request, cancellationToken);
         }
 
         /// <summary>
-        /// Asynchronously reads the contents of the SetRgb register.
+        /// Asynchronously reads the contents of the RgbState register.
         /// </summary>
         /// <param name="cancellationToken">
         /// A <see cref="CancellationToken"/> which can be used to cancel the operation.
@@ -147,14 +147,14 @@ namespace Harp.RgbArray
         /// A task that represents the asynchronous read operation. The <see cref="Task{TResult}.Result"/>
         /// property contains the register payload.
         /// </returns>
-        public async Task<byte[]> ReadSetRgbAsync(CancellationToken cancellationToken = default)
+        public async Task<byte[]> ReadRgbStateAsync(CancellationToken cancellationToken = default)
         {
-            var reply = await CommandAsync(HarpCommand.ReadByte(SetRgb.Address), cancellationToken);
-            return SetRgb.GetPayload(reply);
+            var reply = await CommandAsync(HarpCommand.ReadByte(RgbState.Address), cancellationToken);
+            return RgbState.GetPayload(reply);
         }
 
         /// <summary>
-        /// Asynchronously reads the timestamped contents of the SetRgb register.
+        /// Asynchronously reads the timestamped contents of the RgbState register.
         /// </summary>
         /// <param name="cancellationToken">
         /// A <see cref="CancellationToken"/> which can be used to cancel the operation.
@@ -163,28 +163,28 @@ namespace Harp.RgbArray
         /// A task that represents the asynchronous read operation. The <see cref="Task{TResult}.Result"/>
         /// property contains the timestamped register payload.
         /// </returns>
-        public async Task<Timestamped<byte[]>> ReadTimestampedSetRgbAsync(CancellationToken cancellationToken = default)
+        public async Task<Timestamped<byte[]>> ReadTimestampedRgbStateAsync(CancellationToken cancellationToken = default)
         {
-            var reply = await CommandAsync(HarpCommand.ReadByte(SetRgb.Address), cancellationToken);
-            return SetRgb.GetTimestampedPayload(reply);
+            var reply = await CommandAsync(HarpCommand.ReadByte(RgbState.Address), cancellationToken);
+            return RgbState.GetTimestampedPayload(reply);
         }
 
         /// <summary>
-        /// Asynchronously writes a value to the SetRgb register.
+        /// Asynchronously writes a value to the RgbState register.
         /// </summary>
         /// <param name="value">The value to be stored in the register.</param>
         /// <param name="cancellationToken">
         /// A <see cref="CancellationToken"/> which can be used to cancel the operation.
         /// </param>
         /// <returns>The task object representing the asynchronous write operation.</returns>
-        public async Task WriteSetRgbAsync(byte[] value, CancellationToken cancellationToken = default)
+        public async Task WriteRgbStateAsync(byte[] value, CancellationToken cancellationToken = default)
         {
-            var request = SetRgb.FromPayload(MessageType.Write, value);
+            var request = RgbState.FromPayload(MessageType.Write, value);
             await CommandAsync(request, cancellationToken);
         }
 
         /// <summary>
-        /// Asynchronously reads the contents of the SetRgbBus0 register.
+        /// Asynchronously reads the contents of the RgbBus0State register.
         /// </summary>
         /// <param name="cancellationToken">
         /// A <see cref="CancellationToken"/> which can be used to cancel the operation.
@@ -193,14 +193,14 @@ namespace Harp.RgbArray
         /// A task that represents the asynchronous read operation. The <see cref="Task{TResult}.Result"/>
         /// property contains the register payload.
         /// </returns>
-        public async Task<byte[]> ReadSetRgbBus0Async(CancellationToken cancellationToken = default)
+        public async Task<byte[]> ReadRgbBus0StateAsync(CancellationToken cancellationToken = default)
         {
-            var reply = await CommandAsync(HarpCommand.ReadByte(SetRgbBus0.Address), cancellationToken);
-            return SetRgbBus0.GetPayload(reply);
+            var reply = await CommandAsync(HarpCommand.ReadByte(RgbBus0State.Address), cancellationToken);
+            return RgbBus0State.GetPayload(reply);
         }
 
         /// <summary>
-        /// Asynchronously reads the timestamped contents of the SetRgbBus0 register.
+        /// Asynchronously reads the timestamped contents of the RgbBus0State register.
         /// </summary>
         /// <param name="cancellationToken">
         /// A <see cref="CancellationToken"/> which can be used to cancel the operation.
@@ -209,28 +209,28 @@ namespace Harp.RgbArray
         /// A task that represents the asynchronous read operation. The <see cref="Task{TResult}.Result"/>
         /// property contains the timestamped register payload.
         /// </returns>
-        public async Task<Timestamped<byte[]>> ReadTimestampedSetRgbBus0Async(CancellationToken cancellationToken = default)
+        public async Task<Timestamped<byte[]>> ReadTimestampedRgbBus0StateAsync(CancellationToken cancellationToken = default)
         {
-            var reply = await CommandAsync(HarpCommand.ReadByte(SetRgbBus0.Address), cancellationToken);
-            return SetRgbBus0.GetTimestampedPayload(reply);
+            var reply = await CommandAsync(HarpCommand.ReadByte(RgbBus0State.Address), cancellationToken);
+            return RgbBus0State.GetTimestampedPayload(reply);
         }
 
         /// <summary>
-        /// Asynchronously writes a value to the SetRgbBus0 register.
+        /// Asynchronously writes a value to the RgbBus0State register.
         /// </summary>
         /// <param name="value">The value to be stored in the register.</param>
         /// <param name="cancellationToken">
         /// A <see cref="CancellationToken"/> which can be used to cancel the operation.
         /// </param>
         /// <returns>The task object representing the asynchronous write operation.</returns>
-        public async Task WriteSetRgbBus0Async(byte[] value, CancellationToken cancellationToken = default)
+        public async Task WriteRgbBus0StateAsync(byte[] value, CancellationToken cancellationToken = default)
         {
-            var request = SetRgbBus0.FromPayload(MessageType.Write, value);
+            var request = RgbBus0State.FromPayload(MessageType.Write, value);
             await CommandAsync(request, cancellationToken);
         }
 
         /// <summary>
-        /// Asynchronously reads the contents of the SetRgbBus1 register.
+        /// Asynchronously reads the contents of the RgbBus1State register.
         /// </summary>
         /// <param name="cancellationToken">
         /// A <see cref="CancellationToken"/> which can be used to cancel the operation.
@@ -239,14 +239,14 @@ namespace Harp.RgbArray
         /// A task that represents the asynchronous read operation. The <see cref="Task{TResult}.Result"/>
         /// property contains the register payload.
         /// </returns>
-        public async Task<byte[]> ReadSetRgbBus1Async(CancellationToken cancellationToken = default)
+        public async Task<byte[]> ReadRgbBus1StateAsync(CancellationToken cancellationToken = default)
         {
-            var reply = await CommandAsync(HarpCommand.ReadByte(SetRgbBus1.Address), cancellationToken);
-            return SetRgbBus1.GetPayload(reply);
+            var reply = await CommandAsync(HarpCommand.ReadByte(RgbBus1State.Address), cancellationToken);
+            return RgbBus1State.GetPayload(reply);
         }
 
         /// <summary>
-        /// Asynchronously reads the timestamped contents of the SetRgbBus1 register.
+        /// Asynchronously reads the timestamped contents of the RgbBus1State register.
         /// </summary>
         /// <param name="cancellationToken">
         /// A <see cref="CancellationToken"/> which can be used to cancel the operation.
@@ -255,28 +255,28 @@ namespace Harp.RgbArray
         /// A task that represents the asynchronous read operation. The <see cref="Task{TResult}.Result"/>
         /// property contains the timestamped register payload.
         /// </returns>
-        public async Task<Timestamped<byte[]>> ReadTimestampedSetRgbBus1Async(CancellationToken cancellationToken = default)
+        public async Task<Timestamped<byte[]>> ReadTimestampedRgbBus1StateAsync(CancellationToken cancellationToken = default)
         {
-            var reply = await CommandAsync(HarpCommand.ReadByte(SetRgbBus1.Address), cancellationToken);
-            return SetRgbBus1.GetTimestampedPayload(reply);
+            var reply = await CommandAsync(HarpCommand.ReadByte(RgbBus1State.Address), cancellationToken);
+            return RgbBus1State.GetTimestampedPayload(reply);
         }
 
         /// <summary>
-        /// Asynchronously writes a value to the SetRgbBus1 register.
+        /// Asynchronously writes a value to the RgbBus1State register.
         /// </summary>
         /// <param name="value">The value to be stored in the register.</param>
         /// <param name="cancellationToken">
         /// A <see cref="CancellationToken"/> which can be used to cancel the operation.
         /// </param>
         /// <returns>The task object representing the asynchronous write operation.</returns>
-        public async Task WriteSetRgbBus1Async(byte[] value, CancellationToken cancellationToken = default)
+        public async Task WriteRgbBus1StateAsync(byte[] value, CancellationToken cancellationToken = default)
         {
-            var request = SetRgbBus1.FromPayload(MessageType.Write, value);
+            var request = RgbBus1State.FromPayload(MessageType.Write, value);
             await CommandAsync(request, cancellationToken);
         }
 
         /// <summary>
-        /// Asynchronously reads the contents of the SetRgbOff register.
+        /// Asynchronously reads the contents of the RgbOffState register.
         /// </summary>
         /// <param name="cancellationToken">
         /// A <see cref="CancellationToken"/> which can be used to cancel the operation.
@@ -285,14 +285,14 @@ namespace Harp.RgbArray
         /// A task that represents the asynchronous read operation. The <see cref="Task{TResult}.Result"/>
         /// property contains the register payload.
         /// </returns>
-        public async Task<byte[]> ReadSetRgbOffAsync(CancellationToken cancellationToken = default)
+        public async Task<byte[]> ReadRgbOffStateAsync(CancellationToken cancellationToken = default)
         {
-            var reply = await CommandAsync(HarpCommand.ReadByte(SetRgbOff.Address), cancellationToken);
-            return SetRgbOff.GetPayload(reply);
+            var reply = await CommandAsync(HarpCommand.ReadByte(RgbOffState.Address), cancellationToken);
+            return RgbOffState.GetPayload(reply);
         }
 
         /// <summary>
-        /// Asynchronously reads the timestamped contents of the SetRgbOff register.
+        /// Asynchronously reads the timestamped contents of the RgbOffState register.
         /// </summary>
         /// <param name="cancellationToken">
         /// A <see cref="CancellationToken"/> which can be used to cancel the operation.
@@ -301,23 +301,23 @@ namespace Harp.RgbArray
         /// A task that represents the asynchronous read operation. The <see cref="Task{TResult}.Result"/>
         /// property contains the timestamped register payload.
         /// </returns>
-        public async Task<Timestamped<byte[]>> ReadTimestampedSetRgbOffAsync(CancellationToken cancellationToken = default)
+        public async Task<Timestamped<byte[]>> ReadTimestampedRgbOffStateAsync(CancellationToken cancellationToken = default)
         {
-            var reply = await CommandAsync(HarpCommand.ReadByte(SetRgbOff.Address), cancellationToken);
-            return SetRgbOff.GetTimestampedPayload(reply);
+            var reply = await CommandAsync(HarpCommand.ReadByte(RgbOffState.Address), cancellationToken);
+            return RgbOffState.GetTimestampedPayload(reply);
         }
 
         /// <summary>
-        /// Asynchronously writes a value to the SetRgbOff register.
+        /// Asynchronously writes a value to the RgbOffState register.
         /// </summary>
         /// <param name="value">The value to be stored in the register.</param>
         /// <param name="cancellationToken">
         /// A <see cref="CancellationToken"/> which can be used to cancel the operation.
         /// </param>
         /// <returns>The task object representing the asynchronous write operation.</returns>
-        public async Task WriteSetRgbOffAsync(byte[] value, CancellationToken cancellationToken = default)
+        public async Task WriteRgbOffStateAsync(byte[] value, CancellationToken cancellationToken = default)
         {
-            var request = SetRgbOff.FromPayload(MessageType.Write, value);
+            var request = RgbOffState.FromPayload(MessageType.Write, value);
             await CommandAsync(request, cancellationToken);
         }
 

@@ -10,31 +10,31 @@ registers:
     address: 32
     type: U8
     access: [Event, Write]
-  NumberOfLeds:
+  LedCount:
     address: 33
     type: U8
     access: Write
     maxValue: 32
     description: The number of LEDs connected on each bus of the device.
-  SetRgb:
+  RgbState:
     address: 34
     type: U8
     length: 192
     access: Write
     description: The RGB color of each LED. [R0 G0 B0 R1 G1 B1 ...].
-  SetRgbBus0:
+  RgbBus0State:
     address: 35
     type: U8
     length: 96
     access: Write
     description: The RGB color of each LED. [R0 G0 B0 R1 G1 B1 ...].
-  SetRgbBus1:
+  RgbBus1State:
     address: 36
     type: U8
     length: 96
     access: Write
     description: The RGB color of each LED. [R0 G0 B0 R1 G1 B1 ...].
-  SetRgbOff:
+  RgbOffState:
     address: 37
     type: U8
     length: 3
@@ -114,7 +114,7 @@ bitMasks:
   DigitalInputs:
     bits:
       DI0: 0x1
-  DigitalOuputs:
+  DigitalOutputs:
     bits:
       DO0: 0x1
       DO1: 0x2
@@ -127,7 +127,7 @@ groupMasks:
     values:
       None: {0, description: "The DI0 pin functions as a passive digital input."}
       UpdateOnRisingEdge: {1, description: "Update the LED colors when the DI0 pin transitions from low to high."}
-      GateUpdate: {2, description: "Able to update RGBs when the pin is HIGH. Turn LEDs off when rising edge is detected."}
+      UpdateOnHigh: {2, description: "Able to update RGBs when the pin is HIGH. Turn LEDs off when rising edge is detected."}
   DOModeConfig:
     description: Specifies the operation mode of a Digital Output pin.
     values:

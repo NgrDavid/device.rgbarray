@@ -38,11 +38,11 @@ namespace Harp.RgbArray
             (Bonsai.Harp.Device.RegisterMap.ToDictionary(entry => entry.Key, entry => entry.Value))
         {
             { 32, typeof(LedStatus) },
-            { 33, typeof(NumberOfLeds) },
-            { 34, typeof(SetRgb) },
-            { 35, typeof(SetRgbBus0) },
-            { 36, typeof(SetRgbBus1) },
-            { 37, typeof(SetRgbOff) },
+            { 33, typeof(LedCount) },
+            { 34, typeof(RgbState) },
+            { 35, typeof(RgbBus0State) },
+            { 36, typeof(RgbBus1State) },
+            { 37, typeof(RgbOffState) },
             { 39, typeof(DI0Mode) },
             { 40, typeof(DO0Mode) },
             { 41, typeof(DO1Mode) },
@@ -84,11 +84,11 @@ namespace Harp.RgbArray
     /// reported by the <see cref="RgbArray"/> device.
     /// </summary>
     /// <seealso cref="LedStatus"/>
-    /// <seealso cref="NumberOfLeds"/>
-    /// <seealso cref="SetRgb"/>
-    /// <seealso cref="SetRgbBus0"/>
-    /// <seealso cref="SetRgbBus1"/>
-    /// <seealso cref="SetRgbOff"/>
+    /// <seealso cref="LedCount"/>
+    /// <seealso cref="RgbState"/>
+    /// <seealso cref="RgbBus0State"/>
+    /// <seealso cref="RgbBus1State"/>
+    /// <seealso cref="RgbOffState"/>
     /// <seealso cref="DI0Mode"/>
     /// <seealso cref="DO0Mode"/>
     /// <seealso cref="DO1Mode"/>
@@ -102,11 +102,11 @@ namespace Harp.RgbArray
     /// <seealso cref="DigitalOutputPulseCount"/>
     /// <seealso cref="EventEnable"/>
     [XmlInclude(typeof(LedStatus))]
-    [XmlInclude(typeof(NumberOfLeds))]
-    [XmlInclude(typeof(SetRgb))]
-    [XmlInclude(typeof(SetRgbBus0))]
-    [XmlInclude(typeof(SetRgbBus1))]
-    [XmlInclude(typeof(SetRgbOff))]
+    [XmlInclude(typeof(LedCount))]
+    [XmlInclude(typeof(RgbState))]
+    [XmlInclude(typeof(RgbBus0State))]
+    [XmlInclude(typeof(RgbBus1State))]
+    [XmlInclude(typeof(RgbOffState))]
     [XmlInclude(typeof(DI0Mode))]
     [XmlInclude(typeof(DO0Mode))]
     [XmlInclude(typeof(DO1Mode))]
@@ -141,11 +141,11 @@ namespace Harp.RgbArray
     /// reported by the RgbArray device.
     /// </summary>
     /// <seealso cref="LedStatus"/>
-    /// <seealso cref="NumberOfLeds"/>
-    /// <seealso cref="SetRgb"/>
-    /// <seealso cref="SetRgbBus0"/>
-    /// <seealso cref="SetRgbBus1"/>
-    /// <seealso cref="SetRgbOff"/>
+    /// <seealso cref="LedCount"/>
+    /// <seealso cref="RgbState"/>
+    /// <seealso cref="RgbBus0State"/>
+    /// <seealso cref="RgbBus1State"/>
+    /// <seealso cref="RgbOffState"/>
     /// <seealso cref="DI0Mode"/>
     /// <seealso cref="DO0Mode"/>
     /// <seealso cref="DO1Mode"/>
@@ -159,11 +159,11 @@ namespace Harp.RgbArray
     /// <seealso cref="DigitalOutputPulseCount"/>
     /// <seealso cref="EventEnable"/>
     [XmlInclude(typeof(LedStatus))]
-    [XmlInclude(typeof(NumberOfLeds))]
-    [XmlInclude(typeof(SetRgb))]
-    [XmlInclude(typeof(SetRgbBus0))]
-    [XmlInclude(typeof(SetRgbBus1))]
-    [XmlInclude(typeof(SetRgbOff))]
+    [XmlInclude(typeof(LedCount))]
+    [XmlInclude(typeof(RgbState))]
+    [XmlInclude(typeof(RgbBus0State))]
+    [XmlInclude(typeof(RgbBus1State))]
+    [XmlInclude(typeof(RgbOffState))]
     [XmlInclude(typeof(DI0Mode))]
     [XmlInclude(typeof(DO0Mode))]
     [XmlInclude(typeof(DO1Mode))]
@@ -177,11 +177,11 @@ namespace Harp.RgbArray
     [XmlInclude(typeof(DigitalOutputPulseCount))]
     [XmlInclude(typeof(EventEnable))]
     [XmlInclude(typeof(TimestampedLedStatus))]
-    [XmlInclude(typeof(TimestampedNumberOfLeds))]
-    [XmlInclude(typeof(TimestampedSetRgb))]
-    [XmlInclude(typeof(TimestampedSetRgbBus0))]
-    [XmlInclude(typeof(TimestampedSetRgbBus1))]
-    [XmlInclude(typeof(TimestampedSetRgbOff))]
+    [XmlInclude(typeof(TimestampedLedCount))]
+    [XmlInclude(typeof(TimestampedRgbState))]
+    [XmlInclude(typeof(TimestampedRgbBus0State))]
+    [XmlInclude(typeof(TimestampedRgbBus1State))]
+    [XmlInclude(typeof(TimestampedRgbOffState))]
     [XmlInclude(typeof(TimestampedDI0Mode))]
     [XmlInclude(typeof(TimestampedDO0Mode))]
     [XmlInclude(typeof(TimestampedDO1Mode))]
@@ -213,11 +213,11 @@ namespace Harp.RgbArray
     /// RgbArray register messages.
     /// </summary>
     /// <seealso cref="LedStatus"/>
-    /// <seealso cref="NumberOfLeds"/>
-    /// <seealso cref="SetRgb"/>
-    /// <seealso cref="SetRgbBus0"/>
-    /// <seealso cref="SetRgbBus1"/>
-    /// <seealso cref="SetRgbOff"/>
+    /// <seealso cref="LedCount"/>
+    /// <seealso cref="RgbState"/>
+    /// <seealso cref="RgbBus0State"/>
+    /// <seealso cref="RgbBus1State"/>
+    /// <seealso cref="RgbOffState"/>
     /// <seealso cref="DI0Mode"/>
     /// <seealso cref="DO0Mode"/>
     /// <seealso cref="DO1Mode"/>
@@ -231,11 +231,11 @@ namespace Harp.RgbArray
     /// <seealso cref="DigitalOutputPulseCount"/>
     /// <seealso cref="EventEnable"/>
     [XmlInclude(typeof(LedStatus))]
-    [XmlInclude(typeof(NumberOfLeds))]
-    [XmlInclude(typeof(SetRgb))]
-    [XmlInclude(typeof(SetRgbBus0))]
-    [XmlInclude(typeof(SetRgbBus1))]
-    [XmlInclude(typeof(SetRgbOff))]
+    [XmlInclude(typeof(LedCount))]
+    [XmlInclude(typeof(RgbState))]
+    [XmlInclude(typeof(RgbBus0State))]
+    [XmlInclude(typeof(RgbBus1State))]
+    [XmlInclude(typeof(RgbOffState))]
     [XmlInclude(typeof(DI0Mode))]
     [XmlInclude(typeof(DO0Mode))]
     [XmlInclude(typeof(DO1Mode))]
@@ -362,25 +362,25 @@ namespace Harp.RgbArray
     /// Represents a register that the number of LEDs connected on each bus of the device.
     /// </summary>
     [Description("The number of LEDs connected on each bus of the device.")]
-    public partial class NumberOfLeds
+    public partial class LedCount
     {
         /// <summary>
-        /// Represents the address of the <see cref="NumberOfLeds"/> register. This field is constant.
+        /// Represents the address of the <see cref="LedCount"/> register. This field is constant.
         /// </summary>
         public const int Address = 33;
 
         /// <summary>
-        /// Represents the payload type of the <see cref="NumberOfLeds"/> register. This field is constant.
+        /// Represents the payload type of the <see cref="LedCount"/> register. This field is constant.
         /// </summary>
         public const PayloadType RegisterType = PayloadType.U8;
 
         /// <summary>
-        /// Represents the length of the <see cref="NumberOfLeds"/> register. This field is constant.
+        /// Represents the length of the <see cref="LedCount"/> register. This field is constant.
         /// </summary>
         public const int RegisterLength = 1;
 
         /// <summary>
-        /// Returns the payload data for <see cref="NumberOfLeds"/> register messages.
+        /// Returns the payload data for <see cref="LedCount"/> register messages.
         /// </summary>
         /// <param name="message">A <see cref="HarpMessage"/> object representing the register message.</param>
         /// <returns>A value representing the message payload.</returns>
@@ -390,7 +390,7 @@ namespace Harp.RgbArray
         }
 
         /// <summary>
-        /// Returns the timestamped payload data for <see cref="NumberOfLeds"/> register messages.
+        /// Returns the timestamped payload data for <see cref="LedCount"/> register messages.
         /// </summary>
         /// <param name="message">A <see cref="HarpMessage"/> object representing the register message.</param>
         /// <returns>A value representing the timestamped message payload.</returns>
@@ -400,12 +400,12 @@ namespace Harp.RgbArray
         }
 
         /// <summary>
-        /// Returns a Harp message for the <see cref="NumberOfLeds"/> register.
+        /// Returns a Harp message for the <see cref="LedCount"/> register.
         /// </summary>
         /// <param name="messageType">The type of the Harp message.</param>
         /// <param name="value">The value to be stored in the message payload.</param>
         /// <returns>
-        /// A <see cref="HarpMessage"/> object for the <see cref="NumberOfLeds"/> register
+        /// A <see cref="HarpMessage"/> object for the <see cref="LedCount"/> register
         /// with the specified message type and payload.
         /// </returns>
         public static HarpMessage FromPayload(MessageType messageType, byte value)
@@ -414,14 +414,14 @@ namespace Harp.RgbArray
         }
 
         /// <summary>
-        /// Returns a timestamped Harp message for the <see cref="NumberOfLeds"/>
+        /// Returns a timestamped Harp message for the <see cref="LedCount"/>
         /// register.
         /// </summary>
         /// <param name="timestamp">The timestamp of the message payload, in seconds.</param>
         /// <param name="messageType">The type of the Harp message.</param>
         /// <param name="value">The value to be stored in the message payload.</param>
         /// <returns>
-        /// A <see cref="HarpMessage"/> object for the <see cref="NumberOfLeds"/> register
+        /// A <see cref="HarpMessage"/> object for the <see cref="LedCount"/> register
         /// with the specified message type, timestamp, and payload.
         /// </returns>
         public static HarpMessage FromPayload(double timestamp, MessageType messageType, byte value)
@@ -432,53 +432,51 @@ namespace Harp.RgbArray
 
     /// <summary>
     /// Provides methods for manipulating timestamped messages from the
-    /// NumberOfLeds register.
+    /// LedCount register.
     /// </summary>
-    /// <seealso cref="NumberOfLeds"/>
-    [Description("Filters and selects timestamped messages from the NumberOfLeds register.")]
-    public partial class TimestampedNumberOfLeds
+    /// <seealso cref="LedCount"/>
+    [Description("Filters and selects timestamped messages from the LedCount register.")]
+    public partial class TimestampedLedCount
     {
         /// <summary>
-        /// Represents the address of the <see cref="NumberOfLeds"/> register. This field is constant.
+        /// Represents the address of the <see cref="LedCount"/> register. This field is constant.
         /// </summary>
-        public const int Address = NumberOfLeds.Address;
+        public const int Address = LedCount.Address;
 
         /// <summary>
-        /// Returns timestamped payload data for <see cref="NumberOfLeds"/> register messages.
+        /// Returns timestamped payload data for <see cref="LedCount"/> register messages.
         /// </summary>
         /// <param name="message">A <see cref="HarpMessage"/> object representing the register message.</param>
         /// <returns>A value representing the timestamped message payload.</returns>
         public static Timestamped<byte> GetPayload(HarpMessage message)
         {
-            return NumberOfLeds.GetTimestampedPayload(message);
+            return LedCount.GetTimestampedPayload(message);
         }
     }
 
     /// <summary>
-    /// Represents a register that the RGB color of each LED. The first 3 bytes are the RGB color of the first LED, the next 3 bytes are the RGB color of the second LED, and so on.
-.
+    /// Represents a register that the RGB color of each LED. [R0 G0 B0 R1 G1 B1 ...].
     /// </summary>
-    [Description("The RGB color of each LED. The first 3 bytes are the RGB color of the first LED, the next 3 bytes are the RGB color of the second LED, and so on.
-")]
-    public partial class SetRgb
+    [Description("The RGB color of each LED. [R0 G0 B0 R1 G1 B1 ...].")]
+    public partial class RgbState
     {
         /// <summary>
-        /// Represents the address of the <see cref="SetRgb"/> register. This field is constant.
+        /// Represents the address of the <see cref="RgbState"/> register. This field is constant.
         /// </summary>
         public const int Address = 34;
 
         /// <summary>
-        /// Represents the payload type of the <see cref="SetRgb"/> register. This field is constant.
+        /// Represents the payload type of the <see cref="RgbState"/> register. This field is constant.
         /// </summary>
         public const PayloadType RegisterType = PayloadType.U8;
 
         /// <summary>
-        /// Represents the length of the <see cref="SetRgb"/> register. This field is constant.
+        /// Represents the length of the <see cref="RgbState"/> register. This field is constant.
         /// </summary>
         public const int RegisterLength = 192;
 
         /// <summary>
-        /// Returns the payload data for <see cref="SetRgb"/> register messages.
+        /// Returns the payload data for <see cref="RgbState"/> register messages.
         /// </summary>
         /// <param name="message">A <see cref="HarpMessage"/> object representing the register message.</param>
         /// <returns>A value representing the message payload.</returns>
@@ -488,7 +486,7 @@ namespace Harp.RgbArray
         }
 
         /// <summary>
-        /// Returns the timestamped payload data for <see cref="SetRgb"/> register messages.
+        /// Returns the timestamped payload data for <see cref="RgbState"/> register messages.
         /// </summary>
         /// <param name="message">A <see cref="HarpMessage"/> object representing the register message.</param>
         /// <returns>A value representing the timestamped message payload.</returns>
@@ -498,12 +496,12 @@ namespace Harp.RgbArray
         }
 
         /// <summary>
-        /// Returns a Harp message for the <see cref="SetRgb"/> register.
+        /// Returns a Harp message for the <see cref="RgbState"/> register.
         /// </summary>
         /// <param name="messageType">The type of the Harp message.</param>
         /// <param name="value">The value to be stored in the message payload.</param>
         /// <returns>
-        /// A <see cref="HarpMessage"/> object for the <see cref="SetRgb"/> register
+        /// A <see cref="HarpMessage"/> object for the <see cref="RgbState"/> register
         /// with the specified message type and payload.
         /// </returns>
         public static HarpMessage FromPayload(MessageType messageType, byte[] value)
@@ -512,14 +510,14 @@ namespace Harp.RgbArray
         }
 
         /// <summary>
-        /// Returns a timestamped Harp message for the <see cref="SetRgb"/>
+        /// Returns a timestamped Harp message for the <see cref="RgbState"/>
         /// register.
         /// </summary>
         /// <param name="timestamp">The timestamp of the message payload, in seconds.</param>
         /// <param name="messageType">The type of the Harp message.</param>
         /// <param name="value">The value to be stored in the message payload.</param>
         /// <returns>
-        /// A <see cref="HarpMessage"/> object for the <see cref="SetRgb"/> register
+        /// A <see cref="HarpMessage"/> object for the <see cref="RgbState"/> register
         /// with the specified message type, timestamp, and payload.
         /// </returns>
         public static HarpMessage FromPayload(double timestamp, MessageType messageType, byte[] value)
@@ -530,53 +528,51 @@ namespace Harp.RgbArray
 
     /// <summary>
     /// Provides methods for manipulating timestamped messages from the
-    /// SetRgb register.
+    /// RgbState register.
     /// </summary>
-    /// <seealso cref="SetRgb"/>
-    [Description("Filters and selects timestamped messages from the SetRgb register.")]
-    public partial class TimestampedSetRgb
+    /// <seealso cref="RgbState"/>
+    [Description("Filters and selects timestamped messages from the RgbState register.")]
+    public partial class TimestampedRgbState
     {
         /// <summary>
-        /// Represents the address of the <see cref="SetRgb"/> register. This field is constant.
+        /// Represents the address of the <see cref="RgbState"/> register. This field is constant.
         /// </summary>
-        public const int Address = SetRgb.Address;
+        public const int Address = RgbState.Address;
 
         /// <summary>
-        /// Returns timestamped payload data for <see cref="SetRgb"/> register messages.
+        /// Returns timestamped payload data for <see cref="RgbState"/> register messages.
         /// </summary>
         /// <param name="message">A <see cref="HarpMessage"/> object representing the register message.</param>
         /// <returns>A value representing the timestamped message payload.</returns>
         public static Timestamped<byte[]> GetPayload(HarpMessage message)
         {
-            return SetRgb.GetTimestampedPayload(message);
+            return RgbState.GetTimestampedPayload(message);
         }
     }
 
     /// <summary>
-    /// Represents a register that the RGB color of each LED. The first 3 bytes are the RGB color of the first LED, the next 3 bytes are the RGB color of the second LED, and so on.
-.
+    /// Represents a register that the RGB color of each LED. [R0 G0 B0 R1 G1 B1 ...].
     /// </summary>
-    [Description("The RGB color of each LED. The first 3 bytes are the RGB color of the first LED, the next 3 bytes are the RGB color of the second LED, and so on.
-")]
-    public partial class SetRgbBus0
+    [Description("The RGB color of each LED. [R0 G0 B0 R1 G1 B1 ...].")]
+    public partial class RgbBus0State
     {
         /// <summary>
-        /// Represents the address of the <see cref="SetRgbBus0"/> register. This field is constant.
+        /// Represents the address of the <see cref="RgbBus0State"/> register. This field is constant.
         /// </summary>
         public const int Address = 35;
 
         /// <summary>
-        /// Represents the payload type of the <see cref="SetRgbBus0"/> register. This field is constant.
+        /// Represents the payload type of the <see cref="RgbBus0State"/> register. This field is constant.
         /// </summary>
         public const PayloadType RegisterType = PayloadType.U8;
 
         /// <summary>
-        /// Represents the length of the <see cref="SetRgbBus0"/> register. This field is constant.
+        /// Represents the length of the <see cref="RgbBus0State"/> register. This field is constant.
         /// </summary>
         public const int RegisterLength = 96;
 
         /// <summary>
-        /// Returns the payload data for <see cref="SetRgbBus0"/> register messages.
+        /// Returns the payload data for <see cref="RgbBus0State"/> register messages.
         /// </summary>
         /// <param name="message">A <see cref="HarpMessage"/> object representing the register message.</param>
         /// <returns>A value representing the message payload.</returns>
@@ -586,7 +582,7 @@ namespace Harp.RgbArray
         }
 
         /// <summary>
-        /// Returns the timestamped payload data for <see cref="SetRgbBus0"/> register messages.
+        /// Returns the timestamped payload data for <see cref="RgbBus0State"/> register messages.
         /// </summary>
         /// <param name="message">A <see cref="HarpMessage"/> object representing the register message.</param>
         /// <returns>A value representing the timestamped message payload.</returns>
@@ -596,12 +592,12 @@ namespace Harp.RgbArray
         }
 
         /// <summary>
-        /// Returns a Harp message for the <see cref="SetRgbBus0"/> register.
+        /// Returns a Harp message for the <see cref="RgbBus0State"/> register.
         /// </summary>
         /// <param name="messageType">The type of the Harp message.</param>
         /// <param name="value">The value to be stored in the message payload.</param>
         /// <returns>
-        /// A <see cref="HarpMessage"/> object for the <see cref="SetRgbBus0"/> register
+        /// A <see cref="HarpMessage"/> object for the <see cref="RgbBus0State"/> register
         /// with the specified message type and payload.
         /// </returns>
         public static HarpMessage FromPayload(MessageType messageType, byte[] value)
@@ -610,14 +606,14 @@ namespace Harp.RgbArray
         }
 
         /// <summary>
-        /// Returns a timestamped Harp message for the <see cref="SetRgbBus0"/>
+        /// Returns a timestamped Harp message for the <see cref="RgbBus0State"/>
         /// register.
         /// </summary>
         /// <param name="timestamp">The timestamp of the message payload, in seconds.</param>
         /// <param name="messageType">The type of the Harp message.</param>
         /// <param name="value">The value to be stored in the message payload.</param>
         /// <returns>
-        /// A <see cref="HarpMessage"/> object for the <see cref="SetRgbBus0"/> register
+        /// A <see cref="HarpMessage"/> object for the <see cref="RgbBus0State"/> register
         /// with the specified message type, timestamp, and payload.
         /// </returns>
         public static HarpMessage FromPayload(double timestamp, MessageType messageType, byte[] value)
@@ -628,53 +624,51 @@ namespace Harp.RgbArray
 
     /// <summary>
     /// Provides methods for manipulating timestamped messages from the
-    /// SetRgbBus0 register.
+    /// RgbBus0State register.
     /// </summary>
-    /// <seealso cref="SetRgbBus0"/>
-    [Description("Filters and selects timestamped messages from the SetRgbBus0 register.")]
-    public partial class TimestampedSetRgbBus0
+    /// <seealso cref="RgbBus0State"/>
+    [Description("Filters and selects timestamped messages from the RgbBus0State register.")]
+    public partial class TimestampedRgbBus0State
     {
         /// <summary>
-        /// Represents the address of the <see cref="SetRgbBus0"/> register. This field is constant.
+        /// Represents the address of the <see cref="RgbBus0State"/> register. This field is constant.
         /// </summary>
-        public const int Address = SetRgbBus0.Address;
+        public const int Address = RgbBus0State.Address;
 
         /// <summary>
-        /// Returns timestamped payload data for <see cref="SetRgbBus0"/> register messages.
+        /// Returns timestamped payload data for <see cref="RgbBus0State"/> register messages.
         /// </summary>
         /// <param name="message">A <see cref="HarpMessage"/> object representing the register message.</param>
         /// <returns>A value representing the timestamped message payload.</returns>
         public static Timestamped<byte[]> GetPayload(HarpMessage message)
         {
-            return SetRgbBus0.GetTimestampedPayload(message);
+            return RgbBus0State.GetTimestampedPayload(message);
         }
     }
 
     /// <summary>
-    /// Represents a register that the RGB color of each LED. The first 3 bytes are the RGB color of the first LED, the next 3 bytes are the RGB color of the second LED, and so on.
-.
+    /// Represents a register that the RGB color of each LED. [R0 G0 B0 R1 G1 B1 ...].
     /// </summary>
-    [Description("The RGB color of each LED. The first 3 bytes are the RGB color of the first LED, the next 3 bytes are the RGB color of the second LED, and so on.
-")]
-    public partial class SetRgbBus1
+    [Description("The RGB color of each LED. [R0 G0 B0 R1 G1 B1 ...].")]
+    public partial class RgbBus1State
     {
         /// <summary>
-        /// Represents the address of the <see cref="SetRgbBus1"/> register. This field is constant.
+        /// Represents the address of the <see cref="RgbBus1State"/> register. This field is constant.
         /// </summary>
         public const int Address = 36;
 
         /// <summary>
-        /// Represents the payload type of the <see cref="SetRgbBus1"/> register. This field is constant.
+        /// Represents the payload type of the <see cref="RgbBus1State"/> register. This field is constant.
         /// </summary>
         public const PayloadType RegisterType = PayloadType.U8;
 
         /// <summary>
-        /// Represents the length of the <see cref="SetRgbBus1"/> register. This field is constant.
+        /// Represents the length of the <see cref="RgbBus1State"/> register. This field is constant.
         /// </summary>
         public const int RegisterLength = 96;
 
         /// <summary>
-        /// Returns the payload data for <see cref="SetRgbBus1"/> register messages.
+        /// Returns the payload data for <see cref="RgbBus1State"/> register messages.
         /// </summary>
         /// <param name="message">A <see cref="HarpMessage"/> object representing the register message.</param>
         /// <returns>A value representing the message payload.</returns>
@@ -684,7 +678,7 @@ namespace Harp.RgbArray
         }
 
         /// <summary>
-        /// Returns the timestamped payload data for <see cref="SetRgbBus1"/> register messages.
+        /// Returns the timestamped payload data for <see cref="RgbBus1State"/> register messages.
         /// </summary>
         /// <param name="message">A <see cref="HarpMessage"/> object representing the register message.</param>
         /// <returns>A value representing the timestamped message payload.</returns>
@@ -694,12 +688,12 @@ namespace Harp.RgbArray
         }
 
         /// <summary>
-        /// Returns a Harp message for the <see cref="SetRgbBus1"/> register.
+        /// Returns a Harp message for the <see cref="RgbBus1State"/> register.
         /// </summary>
         /// <param name="messageType">The type of the Harp message.</param>
         /// <param name="value">The value to be stored in the message payload.</param>
         /// <returns>
-        /// A <see cref="HarpMessage"/> object for the <see cref="SetRgbBus1"/> register
+        /// A <see cref="HarpMessage"/> object for the <see cref="RgbBus1State"/> register
         /// with the specified message type and payload.
         /// </returns>
         public static HarpMessage FromPayload(MessageType messageType, byte[] value)
@@ -708,14 +702,14 @@ namespace Harp.RgbArray
         }
 
         /// <summary>
-        /// Returns a timestamped Harp message for the <see cref="SetRgbBus1"/>
+        /// Returns a timestamped Harp message for the <see cref="RgbBus1State"/>
         /// register.
         /// </summary>
         /// <param name="timestamp">The timestamp of the message payload, in seconds.</param>
         /// <param name="messageType">The type of the Harp message.</param>
         /// <param name="value">The value to be stored in the message payload.</param>
         /// <returns>
-        /// A <see cref="HarpMessage"/> object for the <see cref="SetRgbBus1"/> register
+        /// A <see cref="HarpMessage"/> object for the <see cref="RgbBus1State"/> register
         /// with the specified message type, timestamp, and payload.
         /// </returns>
         public static HarpMessage FromPayload(double timestamp, MessageType messageType, byte[] value)
@@ -726,25 +720,25 @@ namespace Harp.RgbArray
 
     /// <summary>
     /// Provides methods for manipulating timestamped messages from the
-    /// SetRgbBus1 register.
+    /// RgbBus1State register.
     /// </summary>
-    /// <seealso cref="SetRgbBus1"/>
-    [Description("Filters and selects timestamped messages from the SetRgbBus1 register.")]
-    public partial class TimestampedSetRgbBus1
+    /// <seealso cref="RgbBus1State"/>
+    [Description("Filters and selects timestamped messages from the RgbBus1State register.")]
+    public partial class TimestampedRgbBus1State
     {
         /// <summary>
-        /// Represents the address of the <see cref="SetRgbBus1"/> register. This field is constant.
+        /// Represents the address of the <see cref="RgbBus1State"/> register. This field is constant.
         /// </summary>
-        public const int Address = SetRgbBus1.Address;
+        public const int Address = RgbBus1State.Address;
 
         /// <summary>
-        /// Returns timestamped payload data for <see cref="SetRgbBus1"/> register messages.
+        /// Returns timestamped payload data for <see cref="RgbBus1State"/> register messages.
         /// </summary>
         /// <param name="message">A <see cref="HarpMessage"/> object representing the register message.</param>
         /// <returns>A value representing the timestamped message payload.</returns>
         public static Timestamped<byte[]> GetPayload(HarpMessage message)
         {
-            return SetRgbBus1.GetTimestampedPayload(message);
+            return RgbBus1State.GetTimestampedPayload(message);
         }
     }
 
@@ -752,25 +746,25 @@ namespace Harp.RgbArray
     /// Represents a register that the RGB color of the LEDs when they are off.
     /// </summary>
     [Description("The RGB color of the LEDs when they are off.")]
-    public partial class SetRgbOff
+    public partial class RgbOffState
     {
         /// <summary>
-        /// Represents the address of the <see cref="SetRgbOff"/> register. This field is constant.
+        /// Represents the address of the <see cref="RgbOffState"/> register. This field is constant.
         /// </summary>
         public const int Address = 37;
 
         /// <summary>
-        /// Represents the payload type of the <see cref="SetRgbOff"/> register. This field is constant.
+        /// Represents the payload type of the <see cref="RgbOffState"/> register. This field is constant.
         /// </summary>
         public const PayloadType RegisterType = PayloadType.U8;
 
         /// <summary>
-        /// Represents the length of the <see cref="SetRgbOff"/> register. This field is constant.
+        /// Represents the length of the <see cref="RgbOffState"/> register. This field is constant.
         /// </summary>
         public const int RegisterLength = 3;
 
         /// <summary>
-        /// Returns the payload data for <see cref="SetRgbOff"/> register messages.
+        /// Returns the payload data for <see cref="RgbOffState"/> register messages.
         /// </summary>
         /// <param name="message">A <see cref="HarpMessage"/> object representing the register message.</param>
         /// <returns>A value representing the message payload.</returns>
@@ -780,7 +774,7 @@ namespace Harp.RgbArray
         }
 
         /// <summary>
-        /// Returns the timestamped payload data for <see cref="SetRgbOff"/> register messages.
+        /// Returns the timestamped payload data for <see cref="RgbOffState"/> register messages.
         /// </summary>
         /// <param name="message">A <see cref="HarpMessage"/> object representing the register message.</param>
         /// <returns>A value representing the timestamped message payload.</returns>
@@ -790,12 +784,12 @@ namespace Harp.RgbArray
         }
 
         /// <summary>
-        /// Returns a Harp message for the <see cref="SetRgbOff"/> register.
+        /// Returns a Harp message for the <see cref="RgbOffState"/> register.
         /// </summary>
         /// <param name="messageType">The type of the Harp message.</param>
         /// <param name="value">The value to be stored in the message payload.</param>
         /// <returns>
-        /// A <see cref="HarpMessage"/> object for the <see cref="SetRgbOff"/> register
+        /// A <see cref="HarpMessage"/> object for the <see cref="RgbOffState"/> register
         /// with the specified message type and payload.
         /// </returns>
         public static HarpMessage FromPayload(MessageType messageType, byte[] value)
@@ -804,14 +798,14 @@ namespace Harp.RgbArray
         }
 
         /// <summary>
-        /// Returns a timestamped Harp message for the <see cref="SetRgbOff"/>
+        /// Returns a timestamped Harp message for the <see cref="RgbOffState"/>
         /// register.
         /// </summary>
         /// <param name="timestamp">The timestamp of the message payload, in seconds.</param>
         /// <param name="messageType">The type of the Harp message.</param>
         /// <param name="value">The value to be stored in the message payload.</param>
         /// <returns>
-        /// A <see cref="HarpMessage"/> object for the <see cref="SetRgbOff"/> register
+        /// A <see cref="HarpMessage"/> object for the <see cref="RgbOffState"/> register
         /// with the specified message type, timestamp, and payload.
         /// </returns>
         public static HarpMessage FromPayload(double timestamp, MessageType messageType, byte[] value)
@@ -822,25 +816,25 @@ namespace Harp.RgbArray
 
     /// <summary>
     /// Provides methods for manipulating timestamped messages from the
-    /// SetRgbOff register.
+    /// RgbOffState register.
     /// </summary>
-    /// <seealso cref="SetRgbOff"/>
-    [Description("Filters and selects timestamped messages from the SetRgbOff register.")]
-    public partial class TimestampedSetRgbOff
+    /// <seealso cref="RgbOffState"/>
+    [Description("Filters and selects timestamped messages from the RgbOffState register.")]
+    public partial class TimestampedRgbOffState
     {
         /// <summary>
-        /// Represents the address of the <see cref="SetRgbOff"/> register. This field is constant.
+        /// Represents the address of the <see cref="RgbOffState"/> register. This field is constant.
         /// </summary>
-        public const int Address = SetRgbOff.Address;
+        public const int Address = RgbOffState.Address;
 
         /// <summary>
-        /// Returns timestamped payload data for <see cref="SetRgbOff"/> register messages.
+        /// Returns timestamped payload data for <see cref="RgbOffState"/> register messages.
         /// </summary>
         /// <param name="message">A <see cref="HarpMessage"/> object representing the register message.</param>
         /// <returns>A value representing the timestamped message payload.</returns>
         public static Timestamped<byte[]> GetPayload(HarpMessage message)
         {
-            return SetRgbOff.GetTimestampedPayload(message);
+            return RgbOffState.GetTimestampedPayload(message);
         }
     }
 
@@ -1136,9 +1130,9 @@ namespace Harp.RgbArray
     }
 
     /// <summary>
-    /// Represents a register that latches the next update.
+    /// Represents a register that updates the settings of the RGBs, but will queue the instruction until a valid LedStatus command.
     /// </summary>
-    [Description("Latches the next update.")]
+    [Description("Updates the settings of the RGBs, but will queue the instruction until a valid LedStatus command.")]
     public partial class LatchOnNextUpdate
     {
         /// <summary>
@@ -2011,11 +2005,11 @@ namespace Harp.RgbArray
     /// RgbArray device.
     /// </summary>
     /// <seealso cref="CreateLedStatusPayload"/>
-    /// <seealso cref="CreateNumberOfLedsPayload"/>
-    /// <seealso cref="CreateSetRgbPayload"/>
-    /// <seealso cref="CreateSetRgbBus0Payload"/>
-    /// <seealso cref="CreateSetRgbBus1Payload"/>
-    /// <seealso cref="CreateSetRgbOffPayload"/>
+    /// <seealso cref="CreateLedCountPayload"/>
+    /// <seealso cref="CreateRgbStatePayload"/>
+    /// <seealso cref="CreateRgbBus0StatePayload"/>
+    /// <seealso cref="CreateRgbBus1StatePayload"/>
+    /// <seealso cref="CreateRgbOffStatePayload"/>
     /// <seealso cref="CreateDI0ModePayload"/>
     /// <seealso cref="CreateDO0ModePayload"/>
     /// <seealso cref="CreateDO1ModePayload"/>
@@ -2029,11 +2023,11 @@ namespace Harp.RgbArray
     /// <seealso cref="CreateDigitalOutputPulseCountPayload"/>
     /// <seealso cref="CreateEventEnablePayload"/>
     [XmlInclude(typeof(CreateLedStatusPayload))]
-    [XmlInclude(typeof(CreateNumberOfLedsPayload))]
-    [XmlInclude(typeof(CreateSetRgbPayload))]
-    [XmlInclude(typeof(CreateSetRgbBus0Payload))]
-    [XmlInclude(typeof(CreateSetRgbBus1Payload))]
-    [XmlInclude(typeof(CreateSetRgbOffPayload))]
+    [XmlInclude(typeof(CreateLedCountPayload))]
+    [XmlInclude(typeof(CreateRgbStatePayload))]
+    [XmlInclude(typeof(CreateRgbBus0StatePayload))]
+    [XmlInclude(typeof(CreateRgbBus1StatePayload))]
+    [XmlInclude(typeof(CreateRgbOffStatePayload))]
     [XmlInclude(typeof(CreateDI0ModePayload))]
     [XmlInclude(typeof(CreateDO0ModePayload))]
     [XmlInclude(typeof(CreateDO1ModePayload))]
@@ -2047,11 +2041,11 @@ namespace Harp.RgbArray
     [XmlInclude(typeof(CreateDigitalOutputPulseCountPayload))]
     [XmlInclude(typeof(CreateEventEnablePayload))]
     [XmlInclude(typeof(CreateTimestampedLedStatusPayload))]
-    [XmlInclude(typeof(CreateTimestampedNumberOfLedsPayload))]
-    [XmlInclude(typeof(CreateTimestampedSetRgbPayload))]
-    [XmlInclude(typeof(CreateTimestampedSetRgbBus0Payload))]
-    [XmlInclude(typeof(CreateTimestampedSetRgbBus1Payload))]
-    [XmlInclude(typeof(CreateTimestampedSetRgbOffPayload))]
+    [XmlInclude(typeof(CreateTimestampedLedCountPayload))]
+    [XmlInclude(typeof(CreateTimestampedRgbStatePayload))]
+    [XmlInclude(typeof(CreateTimestampedRgbBus0StatePayload))]
+    [XmlInclude(typeof(CreateTimestampedRgbBus1StatePayload))]
+    [XmlInclude(typeof(CreateTimestampedRgbOffStatePayload))]
     [XmlInclude(typeof(CreateTimestampedDI0ModePayload))]
     [XmlInclude(typeof(CreateTimestampedDO0ModePayload))]
     [XmlInclude(typeof(CreateTimestampedDO1ModePayload))]
@@ -2136,9 +2130,9 @@ namespace Harp.RgbArray
     /// Represents an operator that creates a message payload
     /// that the number of LEDs connected on each bus of the device.
     /// </summary>
-    [DisplayName("NumberOfLedsPayload")]
+    [DisplayName("LedCountPayload")]
     [Description("Creates a message payload that the number of LEDs connected on each bus of the device.")]
-    public partial class CreateNumberOfLedsPayload
+    public partial class CreateLedCountPayload
     {
         /// <summary>
         /// Gets or sets the value that the number of LEDs connected on each bus of the device.
@@ -2146,25 +2140,25 @@ namespace Harp.RgbArray
         [Range(min: long.MinValue, max: 32)]
         [Editor(DesignTypes.NumericUpDownEditor, DesignTypes.UITypeEditor)]
         [Description("The value that the number of LEDs connected on each bus of the device.")]
-        public byte NumberOfLeds { get; set; }
+        public byte LedCount { get; set; }
 
         /// <summary>
-        /// Creates a message payload for the NumberOfLeds register.
+        /// Creates a message payload for the LedCount register.
         /// </summary>
         /// <returns>The created message payload value.</returns>
         public byte GetPayload()
         {
-            return NumberOfLeds;
+            return LedCount;
         }
 
         /// <summary>
         /// Creates a message that the number of LEDs connected on each bus of the device.
         /// </summary>
         /// <param name="messageType">Specifies the type of the created message.</param>
-        /// <returns>A new message for the NumberOfLeds register.</returns>
+        /// <returns>A new message for the LedCount register.</returns>
         public HarpMessage GetMessage(MessageType messageType)
         {
-            return Harp.RgbArray.NumberOfLeds.FromPayload(messageType, GetPayload());
+            return Harp.RgbArray.LedCount.FromPayload(messageType, GetPayload());
         }
     }
 
@@ -2172,205 +2166,181 @@ namespace Harp.RgbArray
     /// Represents an operator that creates a timestamped message payload
     /// that the number of LEDs connected on each bus of the device.
     /// </summary>
-    [DisplayName("TimestampedNumberOfLedsPayload")]
+    [DisplayName("TimestampedLedCountPayload")]
     [Description("Creates a timestamped message payload that the number of LEDs connected on each bus of the device.")]
-    public partial class CreateTimestampedNumberOfLedsPayload : CreateNumberOfLedsPayload
+    public partial class CreateTimestampedLedCountPayload : CreateLedCountPayload
     {
         /// <summary>
         /// Creates a timestamped message that the number of LEDs connected on each bus of the device.
         /// </summary>
         /// <param name="timestamp">The timestamp of the message payload, in seconds.</param>
         /// <param name="messageType">Specifies the type of the created message.</param>
-        /// <returns>A new timestamped message for the NumberOfLeds register.</returns>
+        /// <returns>A new timestamped message for the LedCount register.</returns>
         public HarpMessage GetMessage(double timestamp, MessageType messageType)
         {
-            return Harp.RgbArray.NumberOfLeds.FromPayload(timestamp, messageType, GetPayload());
+            return Harp.RgbArray.LedCount.FromPayload(timestamp, messageType, GetPayload());
         }
     }
 
     /// <summary>
     /// Represents an operator that creates a message payload
-    /// that the RGB color of each LED. The first 3 bytes are the RGB color of the first LED, the next 3 bytes are the RGB color of the second LED, and so on.
-.
+    /// that the RGB color of each LED. [R0 G0 B0 R1 G1 B1 ...].
     /// </summary>
-    [DisplayName("SetRgbPayload")]
-    [Description("Creates a message payload that the RGB color of each LED. The first 3 bytes are the RGB color of the first LED, the next 3 bytes are the RGB color of the second LED, and so on.
-.")]
-    public partial class CreateSetRgbPayload
+    [DisplayName("RgbStatePayload")]
+    [Description("Creates a message payload that the RGB color of each LED. [R0 G0 B0 R1 G1 B1 ...].")]
+    public partial class CreateRgbStatePayload
     {
         /// <summary>
-        /// Gets or sets the value that the RGB color of each LED. The first 3 bytes are the RGB color of the first LED, the next 3 bytes are the RGB color of the second LED, and so on.
-.
+        /// Gets or sets the value that the RGB color of each LED. [R0 G0 B0 R1 G1 B1 ...].
         /// </summary>
-        [Description("The value that the RGB color of each LED. The first 3 bytes are the RGB color of the first LED, the next 3 bytes are the RGB color of the second LED, and so on.
-.")]
-        public byte[] SetRgb { get; set; }
+        [Description("The value that the RGB color of each LED. [R0 G0 B0 R1 G1 B1 ...].")]
+        public byte[] RgbState { get; set; }
 
         /// <summary>
-        /// Creates a message payload for the SetRgb register.
+        /// Creates a message payload for the RgbState register.
         /// </summary>
         /// <returns>The created message payload value.</returns>
         public byte[] GetPayload()
         {
-            return SetRgb;
+            return RgbState;
         }
 
         /// <summary>
-        /// Creates a message that the RGB color of each LED. The first 3 bytes are the RGB color of the first LED, the next 3 bytes are the RGB color of the second LED, and so on.
-.
+        /// Creates a message that the RGB color of each LED. [R0 G0 B0 R1 G1 B1 ...].
         /// </summary>
         /// <param name="messageType">Specifies the type of the created message.</param>
-        /// <returns>A new message for the SetRgb register.</returns>
+        /// <returns>A new message for the RgbState register.</returns>
         public HarpMessage GetMessage(MessageType messageType)
         {
-            return Harp.RgbArray.SetRgb.FromPayload(messageType, GetPayload());
+            return Harp.RgbArray.RgbState.FromPayload(messageType, GetPayload());
         }
     }
 
     /// <summary>
     /// Represents an operator that creates a timestamped message payload
-    /// that the RGB color of each LED. The first 3 bytes are the RGB color of the first LED, the next 3 bytes are the RGB color of the second LED, and so on.
-.
+    /// that the RGB color of each LED. [R0 G0 B0 R1 G1 B1 ...].
     /// </summary>
-    [DisplayName("TimestampedSetRgbPayload")]
-    [Description("Creates a timestamped message payload that the RGB color of each LED. The first 3 bytes are the RGB color of the first LED, the next 3 bytes are the RGB color of the second LED, and so on.
-.")]
-    public partial class CreateTimestampedSetRgbPayload : CreateSetRgbPayload
+    [DisplayName("TimestampedRgbStatePayload")]
+    [Description("Creates a timestamped message payload that the RGB color of each LED. [R0 G0 B0 R1 G1 B1 ...].")]
+    public partial class CreateTimestampedRgbStatePayload : CreateRgbStatePayload
     {
         /// <summary>
-        /// Creates a timestamped message that the RGB color of each LED. The first 3 bytes are the RGB color of the first LED, the next 3 bytes are the RGB color of the second LED, and so on.
-.
+        /// Creates a timestamped message that the RGB color of each LED. [R0 G0 B0 R1 G1 B1 ...].
         /// </summary>
         /// <param name="timestamp">The timestamp of the message payload, in seconds.</param>
         /// <param name="messageType">Specifies the type of the created message.</param>
-        /// <returns>A new timestamped message for the SetRgb register.</returns>
+        /// <returns>A new timestamped message for the RgbState register.</returns>
         public HarpMessage GetMessage(double timestamp, MessageType messageType)
         {
-            return Harp.RgbArray.SetRgb.FromPayload(timestamp, messageType, GetPayload());
+            return Harp.RgbArray.RgbState.FromPayload(timestamp, messageType, GetPayload());
         }
     }
 
     /// <summary>
     /// Represents an operator that creates a message payload
-    /// that the RGB color of each LED. The first 3 bytes are the RGB color of the first LED, the next 3 bytes are the RGB color of the second LED, and so on.
-.
+    /// that the RGB color of each LED. [R0 G0 B0 R1 G1 B1 ...].
     /// </summary>
-    [DisplayName("SetRgbBus0Payload")]
-    [Description("Creates a message payload that the RGB color of each LED. The first 3 bytes are the RGB color of the first LED, the next 3 bytes are the RGB color of the second LED, and so on.
-.")]
-    public partial class CreateSetRgbBus0Payload
+    [DisplayName("RgbBus0StatePayload")]
+    [Description("Creates a message payload that the RGB color of each LED. [R0 G0 B0 R1 G1 B1 ...].")]
+    public partial class CreateRgbBus0StatePayload
     {
         /// <summary>
-        /// Gets or sets the value that the RGB color of each LED. The first 3 bytes are the RGB color of the first LED, the next 3 bytes are the RGB color of the second LED, and so on.
-.
+        /// Gets or sets the value that the RGB color of each LED. [R0 G0 B0 R1 G1 B1 ...].
         /// </summary>
-        [Description("The value that the RGB color of each LED. The first 3 bytes are the RGB color of the first LED, the next 3 bytes are the RGB color of the second LED, and so on.
-.")]
-        public byte[] SetRgbBus0 { get; set; }
+        [Description("The value that the RGB color of each LED. [R0 G0 B0 R1 G1 B1 ...].")]
+        public byte[] RgbBus0State { get; set; }
 
         /// <summary>
-        /// Creates a message payload for the SetRgbBus0 register.
+        /// Creates a message payload for the RgbBus0State register.
         /// </summary>
         /// <returns>The created message payload value.</returns>
         public byte[] GetPayload()
         {
-            return SetRgbBus0;
+            return RgbBus0State;
         }
 
         /// <summary>
-        /// Creates a message that the RGB color of each LED. The first 3 bytes are the RGB color of the first LED, the next 3 bytes are the RGB color of the second LED, and so on.
-.
+        /// Creates a message that the RGB color of each LED. [R0 G0 B0 R1 G1 B1 ...].
         /// </summary>
         /// <param name="messageType">Specifies the type of the created message.</param>
-        /// <returns>A new message for the SetRgbBus0 register.</returns>
+        /// <returns>A new message for the RgbBus0State register.</returns>
         public HarpMessage GetMessage(MessageType messageType)
         {
-            return Harp.RgbArray.SetRgbBus0.FromPayload(messageType, GetPayload());
+            return Harp.RgbArray.RgbBus0State.FromPayload(messageType, GetPayload());
         }
     }
 
     /// <summary>
     /// Represents an operator that creates a timestamped message payload
-    /// that the RGB color of each LED. The first 3 bytes are the RGB color of the first LED, the next 3 bytes are the RGB color of the second LED, and so on.
-.
+    /// that the RGB color of each LED. [R0 G0 B0 R1 G1 B1 ...].
     /// </summary>
-    [DisplayName("TimestampedSetRgbBus0Payload")]
-    [Description("Creates a timestamped message payload that the RGB color of each LED. The first 3 bytes are the RGB color of the first LED, the next 3 bytes are the RGB color of the second LED, and so on.
-.")]
-    public partial class CreateTimestampedSetRgbBus0Payload : CreateSetRgbBus0Payload
+    [DisplayName("TimestampedRgbBus0StatePayload")]
+    [Description("Creates a timestamped message payload that the RGB color of each LED. [R0 G0 B0 R1 G1 B1 ...].")]
+    public partial class CreateTimestampedRgbBus0StatePayload : CreateRgbBus0StatePayload
     {
         /// <summary>
-        /// Creates a timestamped message that the RGB color of each LED. The first 3 bytes are the RGB color of the first LED, the next 3 bytes are the RGB color of the second LED, and so on.
-.
+        /// Creates a timestamped message that the RGB color of each LED. [R0 G0 B0 R1 G1 B1 ...].
         /// </summary>
         /// <param name="timestamp">The timestamp of the message payload, in seconds.</param>
         /// <param name="messageType">Specifies the type of the created message.</param>
-        /// <returns>A new timestamped message for the SetRgbBus0 register.</returns>
+        /// <returns>A new timestamped message for the RgbBus0State register.</returns>
         public HarpMessage GetMessage(double timestamp, MessageType messageType)
         {
-            return Harp.RgbArray.SetRgbBus0.FromPayload(timestamp, messageType, GetPayload());
+            return Harp.RgbArray.RgbBus0State.FromPayload(timestamp, messageType, GetPayload());
         }
     }
 
     /// <summary>
     /// Represents an operator that creates a message payload
-    /// that the RGB color of each LED. The first 3 bytes are the RGB color of the first LED, the next 3 bytes are the RGB color of the second LED, and so on.
-.
+    /// that the RGB color of each LED. [R0 G0 B0 R1 G1 B1 ...].
     /// </summary>
-    [DisplayName("SetRgbBus1Payload")]
-    [Description("Creates a message payload that the RGB color of each LED. The first 3 bytes are the RGB color of the first LED, the next 3 bytes are the RGB color of the second LED, and so on.
-.")]
-    public partial class CreateSetRgbBus1Payload
+    [DisplayName("RgbBus1StatePayload")]
+    [Description("Creates a message payload that the RGB color of each LED. [R0 G0 B0 R1 G1 B1 ...].")]
+    public partial class CreateRgbBus1StatePayload
     {
         /// <summary>
-        /// Gets or sets the value that the RGB color of each LED. The first 3 bytes are the RGB color of the first LED, the next 3 bytes are the RGB color of the second LED, and so on.
-.
+        /// Gets or sets the value that the RGB color of each LED. [R0 G0 B0 R1 G1 B1 ...].
         /// </summary>
-        [Description("The value that the RGB color of each LED. The first 3 bytes are the RGB color of the first LED, the next 3 bytes are the RGB color of the second LED, and so on.
-.")]
-        public byte[] SetRgbBus1 { get; set; }
+        [Description("The value that the RGB color of each LED. [R0 G0 B0 R1 G1 B1 ...].")]
+        public byte[] RgbBus1State { get; set; }
 
         /// <summary>
-        /// Creates a message payload for the SetRgbBus1 register.
+        /// Creates a message payload for the RgbBus1State register.
         /// </summary>
         /// <returns>The created message payload value.</returns>
         public byte[] GetPayload()
         {
-            return SetRgbBus1;
+            return RgbBus1State;
         }
 
         /// <summary>
-        /// Creates a message that the RGB color of each LED. The first 3 bytes are the RGB color of the first LED, the next 3 bytes are the RGB color of the second LED, and so on.
-.
+        /// Creates a message that the RGB color of each LED. [R0 G0 B0 R1 G1 B1 ...].
         /// </summary>
         /// <param name="messageType">Specifies the type of the created message.</param>
-        /// <returns>A new message for the SetRgbBus1 register.</returns>
+        /// <returns>A new message for the RgbBus1State register.</returns>
         public HarpMessage GetMessage(MessageType messageType)
         {
-            return Harp.RgbArray.SetRgbBus1.FromPayload(messageType, GetPayload());
+            return Harp.RgbArray.RgbBus1State.FromPayload(messageType, GetPayload());
         }
     }
 
     /// <summary>
     /// Represents an operator that creates a timestamped message payload
-    /// that the RGB color of each LED. The first 3 bytes are the RGB color of the first LED, the next 3 bytes are the RGB color of the second LED, and so on.
-.
+    /// that the RGB color of each LED. [R0 G0 B0 R1 G1 B1 ...].
     /// </summary>
-    [DisplayName("TimestampedSetRgbBus1Payload")]
-    [Description("Creates a timestamped message payload that the RGB color of each LED. The first 3 bytes are the RGB color of the first LED, the next 3 bytes are the RGB color of the second LED, and so on.
-.")]
-    public partial class CreateTimestampedSetRgbBus1Payload : CreateSetRgbBus1Payload
+    [DisplayName("TimestampedRgbBus1StatePayload")]
+    [Description("Creates a timestamped message payload that the RGB color of each LED. [R0 G0 B0 R1 G1 B1 ...].")]
+    public partial class CreateTimestampedRgbBus1StatePayload : CreateRgbBus1StatePayload
     {
         /// <summary>
-        /// Creates a timestamped message that the RGB color of each LED. The first 3 bytes are the RGB color of the first LED, the next 3 bytes are the RGB color of the second LED, and so on.
-.
+        /// Creates a timestamped message that the RGB color of each LED. [R0 G0 B0 R1 G1 B1 ...].
         /// </summary>
         /// <param name="timestamp">The timestamp of the message payload, in seconds.</param>
         /// <param name="messageType">Specifies the type of the created message.</param>
-        /// <returns>A new timestamped message for the SetRgbBus1 register.</returns>
+        /// <returns>A new timestamped message for the RgbBus1State register.</returns>
         public HarpMessage GetMessage(double timestamp, MessageType messageType)
         {
-            return Harp.RgbArray.SetRgbBus1.FromPayload(timestamp, messageType, GetPayload());
+            return Harp.RgbArray.RgbBus1State.FromPayload(timestamp, messageType, GetPayload());
         }
     }
 
@@ -2378,33 +2348,33 @@ namespace Harp.RgbArray
     /// Represents an operator that creates a message payload
     /// that the RGB color of the LEDs when they are off.
     /// </summary>
-    [DisplayName("SetRgbOffPayload")]
+    [DisplayName("RgbOffStatePayload")]
     [Description("Creates a message payload that the RGB color of the LEDs when they are off.")]
-    public partial class CreateSetRgbOffPayload
+    public partial class CreateRgbOffStatePayload
     {
         /// <summary>
         /// Gets or sets the value that the RGB color of the LEDs when they are off.
         /// </summary>
         [Description("The value that the RGB color of the LEDs when they are off.")]
-        public byte[] SetRgbOff { get; set; }
+        public byte[] RgbOffState { get; set; }
 
         /// <summary>
-        /// Creates a message payload for the SetRgbOff register.
+        /// Creates a message payload for the RgbOffState register.
         /// </summary>
         /// <returns>The created message payload value.</returns>
         public byte[] GetPayload()
         {
-            return SetRgbOff;
+            return RgbOffState;
         }
 
         /// <summary>
         /// Creates a message that the RGB color of the LEDs when they are off.
         /// </summary>
         /// <param name="messageType">Specifies the type of the created message.</param>
-        /// <returns>A new message for the SetRgbOff register.</returns>
+        /// <returns>A new message for the RgbOffState register.</returns>
         public HarpMessage GetMessage(MessageType messageType)
         {
-            return Harp.RgbArray.SetRgbOff.FromPayload(messageType, GetPayload());
+            return Harp.RgbArray.RgbOffState.FromPayload(messageType, GetPayload());
         }
     }
 
@@ -2412,19 +2382,19 @@ namespace Harp.RgbArray
     /// Represents an operator that creates a timestamped message payload
     /// that the RGB color of the LEDs when they are off.
     /// </summary>
-    [DisplayName("TimestampedSetRgbOffPayload")]
+    [DisplayName("TimestampedRgbOffStatePayload")]
     [Description("Creates a timestamped message payload that the RGB color of the LEDs when they are off.")]
-    public partial class CreateTimestampedSetRgbOffPayload : CreateSetRgbOffPayload
+    public partial class CreateTimestampedRgbOffStatePayload : CreateRgbOffStatePayload
     {
         /// <summary>
         /// Creates a timestamped message that the RGB color of the LEDs when they are off.
         /// </summary>
         /// <param name="timestamp">The timestamp of the message payload, in seconds.</param>
         /// <param name="messageType">Specifies the type of the created message.</param>
-        /// <returns>A new timestamped message for the SetRgbOff register.</returns>
+        /// <returns>A new timestamped message for the RgbOffState register.</returns>
         public HarpMessage GetMessage(double timestamp, MessageType messageType)
         {
-            return Harp.RgbArray.SetRgbOff.FromPayload(timestamp, messageType, GetPayload());
+            return Harp.RgbArray.RgbOffState.FromPayload(timestamp, messageType, GetPayload());
         }
     }
 
@@ -2592,16 +2562,16 @@ namespace Harp.RgbArray
 
     /// <summary>
     /// Represents an operator that creates a message payload
-    /// that latches the next update.
+    /// that updates the settings of the RGBs, but will queue the instruction until a valid LedStatus command.
     /// </summary>
     [DisplayName("LatchOnNextUpdatePayload")]
-    [Description("Creates a message payload that latches the next update.")]
+    [Description("Creates a message payload that updates the settings of the RGBs, but will queue the instruction until a valid LedStatus command.")]
     public partial class CreateLatchOnNextUpdatePayload
     {
         /// <summary>
-        /// Gets or sets the value that latches the next update.
+        /// Gets or sets the value that updates the settings of the RGBs, but will queue the instruction until a valid LedStatus command.
         /// </summary>
-        [Description("The value that latches the next update.")]
+        [Description("The value that updates the settings of the RGBs, but will queue the instruction until a valid LedStatus command.")]
         public EnableFlag LatchOnNextUpdate { get; set; }
 
         /// <summary>
@@ -2614,7 +2584,7 @@ namespace Harp.RgbArray
         }
 
         /// <summary>
-        /// Creates a message that latches the next update.
+        /// Creates a message that updates the settings of the RGBs, but will queue the instruction until a valid LedStatus command.
         /// </summary>
         /// <param name="messageType">Specifies the type of the created message.</param>
         /// <returns>A new message for the LatchOnNextUpdate register.</returns>
@@ -2626,14 +2596,14 @@ namespace Harp.RgbArray
 
     /// <summary>
     /// Represents an operator that creates a timestamped message payload
-    /// that latches the next update.
+    /// that updates the settings of the RGBs, but will queue the instruction until a valid LedStatus command.
     /// </summary>
     [DisplayName("TimestampedLatchOnNextUpdatePayload")]
-    [Description("Creates a timestamped message payload that latches the next update.")]
+    [Description("Creates a timestamped message payload that updates the settings of the RGBs, but will queue the instruction until a valid LedStatus command.")]
     public partial class CreateTimestampedLatchOnNextUpdatePayload : CreateLatchOnNextUpdatePayload
     {
         /// <summary>
-        /// Creates a timestamped message that latches the next update.
+        /// Creates a timestamped message that updates the settings of the RGBs, but will queue the instruction until a valid LedStatus command.
         /// </summary>
         /// <param name="timestamp">The timestamp of the message payload, in seconds.</param>
         /// <param name="messageType">Specifies the type of the created message.</param>
@@ -3090,7 +3060,7 @@ namespace Harp.RgbArray
     /// 
     /// </summary>
     [Flags]
-    public enum DigitalOuputs : byte
+    public enum DigitalOutputs : byte
     {
         None = 0x0,
         DO0 = 0x1,
@@ -3118,7 +3088,7 @@ namespace Harp.RgbArray
         /// <summary>
         /// Able to update RGBs when the pin is HIGH. Turn LEDs off when rising edge is detected.
         /// </summary>
-        GateUpdate = 2
+        UpdateOnHigh = 2
     }
 
     /// <summary>
