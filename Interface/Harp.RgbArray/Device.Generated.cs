@@ -43,9 +43,11 @@ namespace Harp.RgbArray
             { 35, typeof(RgbBus0State) },
             { 36, typeof(RgbBus1State) },
             { 37, typeof(RgbOffState) },
+            { 38, typeof(Reserved0) },
             { 39, typeof(DI0Mode) },
             { 40, typeof(DO0Mode) },
             { 41, typeof(DO1Mode) },
+            { 42, typeof(Reserved1) },
             { 43, typeof(LatchOnNextUpdate) },
             { 44, typeof(DigitalInputState) },
             { 45, typeof(OutputSet) },
@@ -56,6 +58,41 @@ namespace Harp.RgbArray
             { 50, typeof(DigitalOutputPulseCount) },
             { 51, typeof(EventEnable) }
         };
+
+        /// <summary>
+        /// Gets the contents of the metadata file describing the <see cref="RgbArray"/>
+        /// device registers.
+        /// </summary>
+        public static readonly string Metadata = GetDeviceMetadata();
+
+        static string GetDeviceMetadata()
+        {
+            var deviceType = typeof(Device);
+            using var metadataStream = deviceType.Assembly.GetManifestResourceStream($"{deviceType.Namespace}.device.yml");
+            using var streamReader = new System.IO.StreamReader(metadataStream);
+            return streamReader.ReadToEnd();
+        }
+    }
+
+    /// <summary>
+    /// Represents an operator that returns the contents of the metadata file
+    /// describing the <see cref="RgbArray"/> device registers.
+    /// </summary>
+    [Description("Returns the contents of the metadata file describing the RgbArray device registers.")]
+    public partial class GetMetadata : Source<string>
+    {
+        /// <summary>
+        /// Returns an observable sequence with the contents of the metadata file
+        /// describing the <see cref="RgbArray"/> device registers.
+        /// </summary>
+        /// <returns>
+        /// A sequence with a single <see cref="string"/> object representing the
+        /// contents of the metadata file.
+        /// </returns>
+        public override IObservable<string> Generate()
+        {
+            return Observable.Return(Device.Metadata);
+        }
     }
 
     /// <summary>
@@ -839,6 +876,28 @@ namespace Harp.RgbArray
     }
 
     /// <summary>
+    /// Represents a register that reserved for future use.
+    /// </summary>
+    [Description("Reserved for future use.")]
+    internal partial class Reserved0
+    {
+        /// <summary>
+        /// Represents the address of the <see cref="Reserved0"/> register. This field is constant.
+        /// </summary>
+        public const int Address = 38;
+
+        /// <summary>
+        /// Represents the payload type of the <see cref="Reserved0"/> register. This field is constant.
+        /// </summary>
+        public const PayloadType RegisterType = PayloadType.U8;
+
+        /// <summary>
+        /// Represents the length of the <see cref="Reserved0"/> register. This field is constant.
+        /// </summary>
+        public const int RegisterLength = 1;
+    }
+
+    /// <summary>
     /// Represents a register that manipulates messages from register DI0Mode.
     /// </summary>
     [Description("")]
@@ -1127,6 +1186,28 @@ namespace Harp.RgbArray
         {
             return DO1Mode.GetTimestampedPayload(message);
         }
+    }
+
+    /// <summary>
+    /// Represents a register that reserved for future use.
+    /// </summary>
+    [Description("Reserved for future use.")]
+    internal partial class Reserved1
+    {
+        /// <summary>
+        /// Represents the address of the <see cref="Reserved1"/> register. This field is constant.
+        /// </summary>
+        public const int Address = 42;
+
+        /// <summary>
+        /// Represents the payload type of the <see cref="Reserved1"/> register. This field is constant.
+        /// </summary>
+        public const PayloadType RegisterType = PayloadType.U8;
+
+        /// <summary>
+        /// Represents the length of the <see cref="Reserved1"/> register. This field is constant.
+        /// </summary>
+        public const int RegisterLength = 1;
     }
 
     /// <summary>
